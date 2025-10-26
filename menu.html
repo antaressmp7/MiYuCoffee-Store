@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi;Yu Coffee&Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --accent:#c49a6c;
+      --accent-600:#b3834f;
+      --bg:#faf7f3;
+      --muted:#6b6b6b;
+      font-family:'Inter',system-ui;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:#222;scroll-behavior:smooth;}
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 6vw;
+      z-index: 1000;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    header.scrolled {background: rgba(60,47,39,0.95);padding: 10px 6vw;}
+
+    .brand {display: flex;align-items: center;gap: 10px;}
+    .logo {width: 42px;height: 42px;border-radius: 10px;overflow: hidden;flex-shrink: 0;}
+    .logo img {width: 100%;height: 100%;object-fit: cover;border-radius: 10px;}
+    .brand-text {line-height: 1.2;color: #fff;text-shadow: 0 1px 3px rgba(0,0,0,0.4);}
+    .brand-text strong {font-size: 18px;}
+    .brand-text small {font-size: 13px;opacity: 0.85;}
+    nav a {margin-left: 18px;text-decoration: none;color: #fff;font-weight: 600;text-shadow: 0 1px 3px rgba(0,0,0,0.3);transition: color 0.3s;}
+    nav a:hover {color: var(--accent);}
+
+    /* Hero */
+    .hero {
+      height: 88vh;
+      position: relative;
+      background: url('img/miyu2.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #fff;
+      text-align: center;
+    }
+    .hero::before {content:'';position:absolute;inset:0;background:rgba(0,0,0,0.45);}
+    .hero-content {position:relative;z-index:1;padding:0 20px;}
+    .hero-content h1 {font-family:'Playfair Display';font-size:46px;margin-bottom:10px;text-shadow:0 3px 6px rgba(0,0,0,0.5);}
+    .hero-content p {font-size:18px;color:#f0f0f0;}
+
+    /* Menu */
+    .menu-section {
+      padding: 100px 6vw 80px;
+      text-align: center;
+    }
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .filter-buttons button {
+      padding:10px 22px;
+      border:none;
+      border-radius:6px;
+      background:var(--accent);
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+      font-size:15px;
+    }
+    .filter-buttons button:hover {background:var(--accent-600)}
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+    .menu-item {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .menu-item:hover {transform: translateY(-4px);box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
+    .menu-item img {
+      width: 100%;
+      aspect-ratio: 1080 / 1616;
+      object-fit: cover;
+      display: block;
+    }
+    .menu-item h3 {
+      margin: 10px 14px 6px;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: #222;
+    }
+    .menu-item p {
+      margin: 0 14px 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .menu-item strong {color: var(--accent);font-size:13.5px;}
+
+    .view-full {margin-top: 50px;}
+    .view-full a {
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .view-full a:hover {background: var(--accent-600);}
+
+    /* Footer */
+    footer {
+      background: #3c2f27;
+      color: #f1f1f1;
+      padding: 30px 6vw;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    footer .left {max-width: 500px;}
+    footer .left div:first-child {font-weight:700;font-size:18px;color:#fff;margin-bottom:4px;}
+    footer .left div:last-child {font-size:13px;color:#ccc;}
+    footer .right {display:flex;align-items:center;gap:14px;}
+    footer .right a {
+      width:38px;height:38px;border-radius:50%;
+      background:#f9f7f5;
+      display:flex;align-items:center;justify-content:center;
+      text-decoration:none;font-size:18px;transition:all 0.3s ease;
+    }
+    footer .right a:hover {background:var(--accent);color:#fff;}
+    footer .copy {color:#bbb;font-size:14px;}
+
+    /* ✅ RESPONSIVE UNTUK HP */
+    @media (max-width: 768px) {
+      header {flex-direction: column;gap: 8px;padding: 10px 4vw;text-align: center;}
+      .logo {width: 34px;height: 34px;}
+      .brand-text strong {font-size: 16px;}
+      .brand-text small {font-size: 12px;}
+      .hero {height: 60vh;background-position: center;}
+      .hero-content h1 {font-size: 32px;}
+      .hero-content p {font-size: 14px;}
+      .menu-section {padding: 70px 4vw 50px;}
+      .filter-buttons button {padding:8px 16px;font-size:13px;}
+      .menu-grid {grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));gap: 14px;}
+      .menu-item h3 {font-size:14px;margin:8px 10px 4px;}
+      .menu-item p {font-size:12px;margin:0 10px 8px;}
+      footer {flex-direction:column;text-align:center;gap:10px;padding:25px 4vw;}
+      footer .right {justify-content:center;}
+      nav a {display:inline-block;margin:6px;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">
+        <img id="siteLogo" src="img/logomiyu.jpg" alt="Logo MiYu Coffee">
+      </div>
+      <div class="brand-text">
+        <strong>Mi;Yu Coffee & Store</strong><br>
+        <small>Coffee & Food</small>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="locations.html">Locations</a>
+      <a href="#">Menu</a>
+      <a href="gallery.html">Gallery</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Our Menu</h1>
+      <p>Delicious selections of drinks and food for every taste</p>
+    </div>
+  </section>
+
+  <section class="menu-section">
+    <div class="filter-buttons">
+      <button onclick="filterMenu('all')">All</button>
+      <button onclick="filterMenu('drink')">Drink</button>
+      <button onclick="filterMenu('food')">Food</button>
+    </div>
+
+    <div class="menu-grid" id="menu-grid">
+      <div class="menu-item drink">
+        <img src="img/drink&food/komiyu.jpg" alt="Coffee Latte">
+        <h3>KO Mi;Yu</h3>
+        <p>Kopi susu creamy dengan powder signature.</p>
+        <p><strong>Rp23.000 - Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/butterscoth.jpg" alt="Coffee Latte">
+        <h3>Butterscoth</h3>
+        <p>Kopi Susu Dengan Sensasi Rasa Butterscotch.</p>
+        <p><strong>Rp28.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/honneycoffee.jpg" alt="Club Sandwich">
+        <h3>Honey Coffee</h3>
+        <p>Kopi Susu Dengan Sensasi Rasa Madu.</p>
+        <p><strong>Rp25.000 - Rp28.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/biscoff.jpg" alt="Coffee Latte">
+        <h3>Biscoff Coffee</h3>
+        <p>Kopi susu dengan rasa biscoff crunchy.</p>
+        <p><strong>Rp30.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/coffeepandan.jpg" alt="Coffee Latte">
+        <h3>Pandan Coffee</h3>
+        <p>Kopi Susu Dengan Rasa Pandan.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/coffesus.jpg" alt="Coffee Latte">
+        <h3>Coffesus Mi;Yu</h3>
+        <p>Kopi susu dengan susu kental manis.</p>
+        <p><strong>Rp23.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=800" alt="Coffee Latte">
+        <h3>Bon Mi;Yu</h3>
+        <p><strong>Rp20.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/coffeearen.jpg" alt="Coffee Latte">
+        <h3>Coffee Aren</h3>
+        <p>Kopi Susu Dengan Rasa Gula Aren.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/cano.jpg" alt="Coffee Latte">
+        <h3>Miyucano</h3>
+        <p>Americano dengan campuran soda, sirup strawberry dan watermelon.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/cano.jpg" alt="Coffee Latte">
+        <h3>Picano</h3>
+        <p>Americano dengan campuran soda, sirup manggo dan peach.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/2-IMG_6870.jpg" alt="Coffee Latte">
+        <h3>Vietnam Drip</h3>
+        <p><strong>Rp20.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/v60.jpg" alt="Coffee Latte">
+        <h3>V60</h3>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/v60japanese.jpg" alt="Coffee Latte">
+        <h3>V60 Japanese</h3>
+        <p><strong>Rp28.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/vanillalatte.jpg" alt="Coffee Latte">
+        <h3>Vanilla Latte</h3>
+        <p>Kopi Susu Dengan Campuran Sirup Vanilla.</p>
+        <p><strong>Rp23.000 - Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/huzelnutlatte.jpg" alt="Coffee Latte">
+        <h3>Hazelnut Latte</h3>
+        <p>Kopi Susu Dengan Campuran Sirup Hazelnut.</p>
+        <p><strong>Rp23.000 - Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/36-popcorn coffee.jpg" alt="Coffee Latte">
+        <h3>Popcorn Latte</h3>
+        <p>Kopi Susu Dengan Sirup Popcorn.</p>
+        <p><strong>Rp23.000 - Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/caramel.jpg" alt="Coffee Latte">
+        <h3>Caramel Latte</h3>
+        <p>Kopi susu dengan sirup caramel.</p>
+        <p><strong>Rp23.000 - Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/americano.jpg" alt="Coffee Latte">
+        <h3>Americano</h3>
+        <p>Campuran Esspreso Dan Air Mineral.</p>
+        <p><strong>Rp22.000 - Rp20.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/coffelatte.jpg" alt="Coffee Latte">
+        <h3>Coffee Latte</h3>
+        <p>Campuran espresso dan mix milk.</p>
+        <p><strong>Rp27.000 - Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/cappuccino.jpg" alt="Coffee Latte">
+        <h3>Cappucinno</h3>
+        <p>Campuran Espresso Dan Mix Milk Dengan Foam Yang Lebih Tebal.</p>
+        <p><strong>Rp27.000 - Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/lecitea.jpg" alt="Coffee Latte">
+        <h3>Lychee Tea</h3>
+        <p>Campuran powder lychee dan soda ditambah buah leci.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/peachtea.jpg" alt="Coffee Latte">
+        <h3>Peach Tea</h3>
+        <p>Campuran Powder Peach Dan Soda.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/lemontea.jpg" alt="Coffee Latte">
+        <h3>Lemon Tea</h3>
+        <p>Campuran Powder Lemon.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/thaitea.jpg" alt="Coffee Latte">
+        <h3>Thai Tea</h3>
+        <p>Campuran Powder Thai Tea Dan Mix Milk.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/28-cokelat berry.jpg" alt="Coffee Latte">
+        <h3>Choco Berry</h3>
+        <p>Campuran Dark Coklat Dan Sirup Strawberry.</p>
+        <p><strong>Rp28.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/29-cokelat.jpg" alt="Coffee Latte">
+        <h3>Chocolate</h3>
+        <p>Campuran Dark Coklat Dan Susu.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/30-cokelat huzelnut.jpg" alt="Coffee Latte">
+        <h3>Chocolate Hazelnut</h3>
+        <p>Campuran coklat dan sirup hazelnut.</p>
+        <p><strong>Rp28.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/26-matcha.jpg" alt="Coffee Latte">
+        <h3>Matcha</h3>
+        <p>Campuran Powder Matcha Dan Mix Milk.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/24-matcha berry.jpg" alt="Coffee Latte">
+        <h3>Matcha Berry</h3>
+        <p>Campuran Powder Matcha, Sirup Strawberry Dan Mix Milk.</p>
+        <p><strong>Rp28.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/matchapremium.jpg" alt="Coffee Latte">
+        <h3>Matcha Ceremony (Premium)</h3>
+        <p>Matcha Premium Yang Dibuat Dengan Teknik Peneduh.</p>
+        <p><strong>Rp40.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/44-red velvet 2.jpg" alt="Coffee Latte">
+        <h3>Red Velvet</h3>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/regal.jpg" alt="Coffee Latte">
+        <h3>Kopi Regal</h3>
+        <p>Kop Susui Gula Aren Dengan Campuran Regal.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item drink">
+        <img src="img/drink&food/regal.jpg" alt="Coffee Latte">
+        <h3>Vanilla Regal</h3>
+        <p>Campuran Gula Aren, Mix Milk Dan Tambahan Regal.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/20-sambal bawang 2.jpg" alt="Food">
+        <h3>MiyuBang</h3>
+        <p>Nasi, ayam krispi dan sambal bawang.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/18-sambal ijo 2.jpg" alt="Food">
+        <h3>MiyuJo</h3>
+        <p>Nasi, ayam krispi dan sambal ijo.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/39-nasi rendang 2.jpg" alt="Food">
+        <h3>Miyu Rego</h3>
+        <p>Nasi, daging sapi, sayur tumis.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=800" alt="Food">
+        <h3>Miyu Temdas</h3>
+        <p>Nasi, selada, timun dan tempe, sambal pedas.</p>
+        <p><strong>Rp20.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=800" alt="Food">
+        <h3>Miyu Kani</h3>
+        <p>Nasi, Ikan Tuna Suir Dan Sayur Tumis.</p>
+        <p><strong>Rp20.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/nasiparu.jpg" alt="Food">
+        <h3>Miyu Rupa</h3>
+        <p>Nasi, paru rica, sayur tumis.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/16-sambal matah.jpg" alt="Food">
+        <h3>MiyuTah</h3>
+        <p>Nasi, ayam krispi dan sambal matah.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/19-sambal.jpg" alt="Food">
+        <h3>MiyuMie</h3>
+        <p>Mie goreng, ayam krispi dan varian sambal (bawang, ijo dan matah).</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=800" alt="Food">
+        <h3>Kwetiau Goreng</h3>
+        <p>Udang, Daging Ayam, Telur Ayam Dan Sawi/Pakcoi.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/35-mie rendang.jpg" alt="Food">
+        <h3>MidangYu</h3>
+        <p>Indomie, daging gore-gore, nasi, selada dan timun.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/kebabMiyu.jpg" alt="Snack">
+        <h3>Kebab Miyu</h3>
+        <p>Kebab Dengan Isian Ayam Krispi Dan Saus Sambal.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/22-mix plater.jpg" alt="Snack">
+        <h3>Mix Platter</h3>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="img/drink&food/21-kentang.jpg" alt="Snack">
+        <h3>French Fries</h3>
+        <p><strong>Rp20.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=800" alt="Snack">
+        <h3>Sandwich</h3>
+        <p>Roti Tawar, Selada, Daging, Saus Tomat/Mayonaise Dan Keju Slice.</p>
+        <p><strong>Rp25.000</strong></p>
+      </div>
+
+      <div class="menu-item food">
+        <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=800" alt="Snack">
+        <h3>Burger + Fried Fries</h3>
+        <p>Roti Burger, Selada, Daging, Saus Tomat/Mayonaise Dan Keju Slice.</p>
+        <p><strong>Rp30.000</strong></p>
+      </div>
+    </div>
+
+    <div class="view-full">
+      <a href="img/menumiyu.pdf" target="_blank">
+        <i class="fa-solid fa-book-open"></i> View Full Menu
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="left">
+      <div>Mi;Yu Coffee & Store</div>
+      <div>Jl. Setia Budi, Besusu Tengah, Kec. Palu Tim., Kota Palu, Sulawesi Tengah</div>
+    </div>
+    <div class="right">
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/mi.yu.coffee?igsh=MXNyY2RkbmExMzluNA==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <div class="copy">&copy; <span id="year"></span> Mi;Yu Coffee</div>
+    </div>
+  </footer>
+
+  <script>
+    // Tahun otomatis di footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Navbar scroll effect
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Filter menu
+    function filterMenu(type) {
+      const items = document.querySelectorAll(".menu-item");
+      items.forEach(item => {
+        item.style.display = (type === "all" || item.classList.contains(type)) ? "block" : "none";
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi;Yu Coffee&Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{
+      --accent:#c49a6c;
+      --accent-600:#b3834f;
+      --bg:#faf7f3;
+      --muted:#d1c7be;
+      --overlay:rgba(0,0,0,0.45);
+      --footer-bg:#3c2f27;
+      font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:#222;scroll-behavior:smooth;}
+
+    /* HEADER STICKY */
+    header{
+      position:fixed;
+      top:0;left:0;right:0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 6vw;
+      z-index:1000;
+      background:rgba(0,0,0,0.25);
+      backdrop-filter:blur(8px);
+      transition:all 0.3s ease;
+    }
+    header.scrolled{background:rgba(0,0,0,0.85);padding:10px 6vw;}
+
+    .brand{display:flex;align-items:center;gap:10px;}
+    .brand img{width:40px;height:40px;border-radius:10px;object-fit:cover;}
+    .brand-text div:first-child{font-weight:700;color:#fff;font-size:18px;text-shadow:0 1px 3px rgba(0,0,0,0.4);}
+    .brand-text div:last-child{font-size:12px;color:#fff;opacity:0.85;}
+    nav a{margin-left:18px;text-decoration:none;color:#fff;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,0.3);transition:color 0.3s;}
+    nav a:hover{color:var(--accent)}
+
+    /* HERO */
+    .hero{
+      position:relative;height:100vh;
+      background:url('img/miyu4.jpg') center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;flex-direction:column;
+      color:#fff;text-align:center;
+    }
+    .hero::before{content:'';position:absolute;inset:0;background:var(--overlay);}
+    .hero-content{position:relative;z-index:1;padding:0 20px;}
+    .hero-content h1{font-family:'Playfair Display',serif;font-size:52px;margin-bottom:20px;text-shadow:0 3px 6px rgba(0,0,0,0.5);}
+    .hero-buttons{
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .hero-buttons .btn{
+      background:rgba(255,255,255,0.15);
+      border:2px solid #fff;
+      transition:0.3s;
+      text-decoration:none;
+      color:#fff;
+      padding:10px 20px;
+      border-radius:10px;
+      font-weight:600;
+    }
+    .hero-buttons .btn:hover{
+      background:#fff;
+      color:#222;
+    }
+
+    /* MODAL ORDER */
+    .modal{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.6);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;visibility:hidden;transition:.3s;
+      z-index:9999;
+    }
+    .modal.active{opacity:1;visibility:visible;}
+    .modal-content{
+      background:#fff;
+      border-radius:16px;
+      padding:30px 40px;
+      text-align:center;
+      max-width:340px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.2);
+    }
+    .modal-content h3{
+      font-family:'Playfair Display',serif;
+      margin-bottom:20px;
+      color:#3c2f27;
+    }
+    .modal-buttons{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .modal-buttons a{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      text-decoration:none;
+      color:#fff;
+      padding:12px 0;
+      border-radius:8px;
+      font-weight:600;
+      transition:.3s;
+    }
+    .modal-buttons a i{font-size:18px;}
+    .btn-grab{background:#00b14f;}
+    .btn-grab:hover{background:#009742;}
+    .btn-gofood{background:#ed1b24;}
+    .btn-gofood:hover{background:#d0161f;}
+    .close-modal{
+      margin-top:20px;
+      background:none;
+      border:none;
+      color:#555;
+      cursor:pointer;
+      font-size:15px;
+      transition:.3s;
+    }
+    .close-modal:hover{color:#000;}
+
+    /* ABOUT */
+    .about{padding:100px 6vw 80px;background:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:40px;}
+    .about img{width:480px;max-width:100%;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+    .about-text{flex:1;min-width:280px;}
+    .about-text h2{font-family:'Playfair Display',serif;font-size:36px;margin-bottom:16px;color:#2b2b2b;}
+    .about-text p{font-size:16px;color:#6b6b6b;line-height:1.7;margin-bottom:20px;}
+    .about-text a{background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:600;transition:0.3s;}
+    .about-text a:hover{background:var(--accent-600);}
+
+    /* FOOTER */
+    footer {
+      background: #3c2f27;
+      color: #f1f1f1;
+      padding: 30px 6vw;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    footer .left {max-width: 500px;}
+    footer .left div:first-child {font-weight: 700;font-size: 18px;color: #fff;margin-bottom: 4px;}
+    footer .left div:last-child {font-size: 13px;color: #ccc;}
+    footer .right {display: flex;align-items: center;gap: 14px;}
+    footer .right a {width: 38px;height: 38px;border-radius: 50%;background: #f9f7f5;display: flex;align-items: center;justify-content: center;text-decoration: none;font-size: 18px;transition: all 0.3s ease;}
+    footer .right a:hover {background: var(--accent);color: #fff;}
+    footer .copy {color: #bbb;font-size: 14px;}
+
+    @media(max-width:768px){
+      header {flex-direction: column;gap: 8px;padding: 10px 4vw;}
+      .hero-content h1{font-size:36px;}
+      .about{flex-direction:column;text-align:center;}
+      footer {flex-direction: column;text-align: center;gap: 12px;}
+      footer .right {justify-content: center;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="img/logomiyu.jpg" alt="Logo MiYu Coffee">
+      <div class="brand-text">
+        <div>Mi;Yu Coffee & Store</div>
+        <div>Coffee & Food</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="locations.html">Locations</a>
+      <a href="menu.html">Menu</a>
+      <a href="gallery.html">Gallery</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Delicious Moments Begin Here</h1>
+      <div class="hero-buttons">
+        <a href="locations.html" class="btn">LOCATIONS</a>
+        <a href="menu.html" class="btn">OUR MENU</a>
+        <a href="#" class="btn" id="orderNowBtn">ORDER NOW</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL PILIHAN ORDER -->
+  <div class="modal" id="orderModal">
+    <div class="modal-content">
+      <h3>Order via</h3>
+      <div class="modal-buttons">
+        <a href="https://food.grab.com/id/id/restaurant/miyu-coffee-store-besusu-tengah-delivery/6-C7NVLVJTEVJKLE?" target="_blank" class="btn-grab">
+          <i class="fa-solid fa-bicycle"></i> GrabFood
+        </a>
+        <a href="https://gofood.co.id/en/palu/restaurant/miyu-coffee-and-store-kecamatan-palu-timur-28c5f760-e89b-4fd8-8927-0041fe5cee8d" target="_blank" class="btn-gofood">
+          <i class="fa-solid fa-motorcycle"></i> GoFood
+        </a>
+      </div>
+      <button class="close-modal" id="closeModal">Batal</button>
+    </div>
+  </div>
+
+  <section class="about">
+    <img src="img/miyu5.jpg" alt="About MiYu Coffee">
+    <div class="about-text">
+      <h2>About Us</h2>
+      <p>Mi;Yu Coffee & Store berdiri dengan semangat menghadirkan cita rasa kopi terbaik dan suasana nyaman bagi setiap pengunjung.</p>
+      <p>Kami menyediakan aneka makanan dan minuman berkualitas, cocok untuk menemani waktu santai ataupun bekerja.</p>
+      <a href="https://www.instagram.com/mi.yu.coffee?igsh=MXNyY2RkbmExMzluNA==" target="_blank">Follow Us on Instagram</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="left">
+      <div>Mi;Yu Coffee & Store</div>
+      <div>Jl. Setia Budi, Besusu Tengah, Kec. Palu Tim., Kota Palu, Sulawesi Tengah</div>
+    </div>
+    <div class="right">
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/mi.yu.coffee?igsh=MXNyY2RkbmExMzluNA==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <div class="copy">&copy; <span id="year"></span> Mi;Yu Coffee & Store</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const header = document.querySelector('header');
+    window.addEventListener('scroll',()=>{window.scrollY>50?header.classList.add('scrolled'):header.classList.remove('scrolled');});
+
+    // Modal
+    const modal = document.getElementById('orderModal');
+    const openBtn = document.getElementById('orderNowBtn');
+    const closeBtn = document.getElementById('closeModal');
+
+    openBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.add('active');
+    });
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+  </script>
+</body>
+</html>
