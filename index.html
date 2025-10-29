@@ -3,9 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mi;Yu Coffee&Store</title>
+  <title>Mi;Yu Coffee & Store</title>
+  <meta name="description" content="Mi;Yu Coffee & Store — kopi dan makanan lezat, suasana nyaman. Kunjungi lokasi kami atau lihat menu online.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CQPX43GGVC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CQPX43GGVC');
+  </script>
+
   <style>
     :root{
       --accent:#c49a6c;
@@ -193,14 +205,14 @@
   </section>
 
   <!-- MODAL PILIHAN ORDER -->
-  <div class="modal" id="orderModal">
-    <div class="modal-content">
-      <h3>Order via</h3>
+  <div class="modal" id="orderModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+      <h3 id="orderTitle">Order via</h3>
       <div class="modal-buttons">
-        <a href="https://food.grab.com/id/id/restaurant/miyu-coffee-store-besusu-tengah-delivery/6-C7NVLVJTEVJKLE?" target="_blank" class="btn-grab">
+        <a href="https://food.grab.com/id/id/restaurant/miyu-coffee-store-besusu-tengah-delivery/6-C7NVLVJTEVJKLE?" target="_blank" rel="noopener noreferrer" class="btn-grab">
           <i class="fa-solid fa-bicycle"></i> GrabFood
         </a>
-        <a href="https://gofood.co.id/en/palu/restaurant/miyu-coffee-and-store-kecamatan-palu-timur-28c5f760-e89b-4fd8-8927-0041fe5cee8d" target="_blank" class="btn-gofood">
+        <a href="https://gofood.co.id/en/palu/restaurant/miyu-coffee-and-store-kecamatan-palu-timur-28c5f760-e89b-4fd8-8927-0041fe5cee8d" target="_blank" rel="noopener noreferrer" class="btn-gofood">
           <i class="fa-solid fa-motorcycle"></i> GoFood
         </a>
       </div>
@@ -214,7 +226,7 @@
       <h2>About Us</h2>
       <p>Mi;Yu Coffee & Store berdiri dengan semangat menghadirkan cita rasa kopi terbaik dan suasana nyaman bagi setiap pengunjung.</p>
       <p>Kami menyediakan aneka makanan dan minuman berkualitas, cocok untuk menemani waktu santai ataupun bekerja.</p>
-      <a href="https://www.instagram.com/mi.yu.coffee?igsh=MXNyY2RkbmExMzluNA==" target="_blank">Follow Us on Instagram</a>
+      <a href="https://www.instagram.com/mi.yu.coffee?igsh=MXNyY2RkbmExMzluNA==" target="_blank" rel="noopener noreferrer">Follow Us on Instagram</a>
     </div>
   </section>
 
@@ -224,16 +236,21 @@
       <div>Jl. Setia Budi, Besusu Tengah, Kec. Palu Tim., Kota Palu, Sulawesi Tengah</div>
     </div>
     <div class="right">
-      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/mi.yu.coffee?igsh=MXNyY2RkbmExMzluNA==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/mi.yu.coffee?igsh=MXNyY2RkbmExMzluNA==" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
       <div class="copy">&copy; <span id="year"></span> Mi;Yu Coffee & Store</div>
     </div>
   </footer>
 
   <script>
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Header scroll effect
     const header = document.querySelector('header');
-    window.addEventListener('scroll',()=>{window.scrollY>50?header.classList.add('scrolled'):header.classList.remove('scrolled');});
+    window.addEventListener('scroll', () => {
+      window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled');
+    });
 
     // Modal
     const modal = document.getElementById('orderModal');
@@ -243,9 +260,13 @@
     openBtn.addEventListener('click', (e) => {
       e.preventDefault();
       modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
     });
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); } });
   </script>
 </body>
 </html>
