@@ -83,6 +83,8 @@
   .category-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(30,15,8,0.15), transparent); }
 
   .menu-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.8rem; }
+  @media(max-width:700px) { .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; } }
+  @media(max-width:400px) { .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; } }
 
   .menu-item {
     background: var(--white); border-radius: 16px; overflow: hidden;
@@ -126,7 +128,16 @@
 
   footer { background: var(--espresso); color: rgba(240,222,200,0.4); text-align: center; padding: 2rem; font-size: 0.78rem; }
   footer span { color: var(--amber); }
-  @media(max-width:600px) { .menu-grid { grid-template-columns: 1fr; } }
+  @media(max-width:700px) {
+    .item-body { padding: 0.75rem 0.8rem 0.9rem; }
+    .item-name { font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .item-desc { font-size: 0.7rem; line-height: 1.5; margin-bottom: 0.6rem; max-height: 2.1rem; overflow: hidden; }
+    .item-price { font-size: 0.82rem; }
+    .item-tag { font-size: 0.58rem; padding: 0.15rem 0.4rem; }
+    .item-footer { flex-wrap: wrap; gap: 0.3rem; }
+    .menu-section { padding: 40px 4% 60px; }
+    .category-title { font-size: 1.3rem; }
+  }
 
   /* ── NAV RESPONSIVE ── */
   @media (max-width: 600px) {
