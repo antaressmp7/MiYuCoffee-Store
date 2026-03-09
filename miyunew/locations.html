@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Locations — Mi;Yu Coffee &amp; Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --espresso: #1E0F08; --roast: #3B1F10; --terra: #C4622D;
+    --amber: #E8935A; --sand: #F0DEC8; --ivory: #FAF5EE;
+    --white: #FFFCF8; --text: #1E0F08; --muted: #7A5540;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: "DM Sans", sans-serif; background: var(--ivory); color: var(--text); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(30,15,8,0.97); backdrop-filter: blur(14px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px; border-bottom: 1px solid rgba(196,98,45,0.2);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-img { width: 44px; height: 44px; border-radius: 10px; overflow: hidden; flex-shrink: 0; background: #1a1a2e; }
+  .nav-logo-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .nav-logo-info { display: flex; flex-direction: column; gap: 1px; }
+  .nav-logo-name { font-family: "DM Sans", sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--sand); letter-spacing: 0.06em; line-height: 1; }
+  .nav-logo-name span { color: var(--amber); }
+  .nav-logo-sub { font-family: "DM Sans", sans-serif; font-size: 0.68rem; font-weight: 400; color: rgba(240,222,200,0.4); letter-spacing: 0.06em; line-height: 1; }
+  .nav-links { display: flex; gap: 0.3rem; }
+  .nav-btn { background: none; border: none; color: rgba(240,222,200,0.6); font-family: "DM Sans", sans-serif; font-size: 0.87rem; cursor: pointer; padding: 0.45rem 1rem; border-radius: 50px; transition: all 0.25s; text-decoration: none; display: inline-block; }
+  .nav-btn:hover, .nav-btn.active { color: var(--amber); background: rgba(196,98,45,0.12); }
+
+  .hours-banner { background: var(--terra); color: var(--white); text-align: center; padding: 0.75rem; font-size: 0.84rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 70px; }
+
+  .page-hero { padding: 60px 5% 65px; background: radial-gradient(ellipse at 30% 70%, #4A2010 0%, #1E0F08 55%, #0D0503 100%); position: relative; overflow: hidden; }
+  .page-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 100%, rgba(196,98,45,0.12) 0%, transparent 60%); }
+  .page-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.8rem; font-weight: 500; display: flex; align-items: center; gap: 0.6rem; animation: fadeUp 0.7s ease both; position: relative; z-index: 1; }
+  .page-eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--amber); }
+  .page-title { font-family: "Playfair Display", serif; font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 400; color: var(--sand); animation: fadeUp 0.8s 0.1s ease both; position: relative; z-index: 1; }
+  .page-title em { color: var(--amber); font-style: italic; font-weight: 700; }
+  .page-sub { color: rgba(240,222,200,0.45); font-size: 0.9rem; margin-top: 0.7rem; animation: fadeUp 0.9s 0.2s ease both; position: relative; z-index: 1; }
+
+  .location-section { padding: 70px 5% 90px; max-width: 1200px; margin: 0 auto; }
+  .location-wrapper { display: grid; grid-template-columns: 1fr 1.5fr; background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 48px rgba(30,15,8,0.1); }
+
+  .loc-info { padding: 3rem; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid rgba(30,15,8,0.07); }
+  .loc-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(196,98,45,0.1); color: var(--terra); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 3px; margin-bottom: 1.2rem; width: fit-content; }
+  .loc-name { font-family: "Playfair Display", serif; font-size: 2rem; font-weight: 700; color: var(--espresso); line-height: 1.1; margin-bottom: 0.3rem; }
+  .loc-area { color: var(--terra); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.8rem; }
+  .loc-divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--terra), var(--amber)); border-radius: 2px; margin-bottom: 1.8rem; }
+
+  .loc-details { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.8rem; }
+  .loc-detail { display: flex; align-items: flex-start; gap: 0.9rem; }
+  .loc-detail-icon { width: 34px; height: 34px; flex-shrink: 0; background: var(--ivory); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; }
+  .loc-detail-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.2rem; }
+  .loc-detail-value { font-size: 0.86rem; color: var(--muted); line-height: 1.55; }
+  .loc-detail-value a { color: var(--muted); text-decoration: none; }
+  .loc-detail-value a:hover { color: var(--terra); }
+
+  .hours-grid { background: var(--ivory); border-radius: 12px; padding: 1.2rem 1.4rem; margin-bottom: 1.8rem; }
+  .hours-grid-title { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.8rem; }
+  .hours-row { display: flex; justify-content: space-between; font-size: 0.81rem; color: var(--muted); padding: 0.3rem 0; border-bottom: 1px solid rgba(30,15,8,0.06); }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-row .day { font-weight: 500; color: var(--espresso); }
+  .hours-row.today .day, .hours-row.today .time { color: var(--terra); font-weight: 700; }
+
+  .loc-features { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .loc-feat { background: rgba(30,15,8,0.05); border: 1px solid rgba(30,15,8,0.08); color: var(--muted); font-size: 0.74rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 3px; }
+
+  .loc-btns { display: flex; gap: 0.75rem; }
+  .btn-directions { flex: 1; background: var(--espresso); color: var(--sand); border: none; padding: 0.85rem 1rem; border-radius: 4px; font-family: "DM Sans", sans-serif; font-size: 0.87rem; font-weight: 600; cursor: pointer; transition: all 0.25s; text-align: center; text-decoration: none; display: block; }
+  .btn-directions:hover { background: var(--terra); transform: translateY(-2px); }
+  .btn-call { background: none; color: var(--espresso); border: 1.5px solid rgba(30,15,8,0.18); padding: 0.85rem 1.2rem; border-radius: 4px; font-family: "DM Sans", sans-serif; font-size: 0.87rem; font-weight: 500; cursor: pointer; transition: all 0.25s; white-space: nowrap; text-decoration: none; display: inline-block; }
+  .btn-call:hover { border-color: var(--terra); color: var(--terra); }
+
+  .loc-map-panel { position: relative; min-height: 620px; }
+  .loc-map-panel iframe { width: 100%; height: 100%; min-height: 620px; border: none; display: block; }
+
+  .map-pin-card { position: absolute; bottom: 22px; left: 22px; background: rgba(30,15,8,0.92); backdrop-filter: blur(12px); border: 1px solid rgba(196,98,45,0.25); border-radius: 12px; padding: 1rem 1.4rem; color: var(--sand); max-width: 230px; }
+  .map-pin-name { font-family: "Playfair Display", serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .map-pin-addr { font-size: 0.74rem; color: rgba(240,222,200,0.55); line-height: 1.5; }
+  .map-open { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem; font-size: 0.74rem; color: #86efac; font-weight: 600; }
+  .map-dot { width: 7px; height: 7px; background: #4ade80; border-radius: 50%; animation: blink 1.5s ease-in-out infinite; }
+
+  footer { background: var(--espresso); color: rgba(240,222,200,0.4); text-align: center; padding: 2rem; font-size: 0.78rem; }
+  footer span { color: var(--amber); }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.2;} }
+
+  @media(max-width:900px) {
+    .location-wrapper { grid-template-columns: 1fr; }
+    .loc-map-panel, .loc-map-panel iframe { min-height: 380px; }
+    .loc-info { border-right: none; border-bottom: 1px solid rgba(30,15,8,0.07); }
+  }
+  @media(max-width:500px) { .loc-info { padding: 2rem 1.5rem; } .loc-btns { flex-direction: column; } }
+
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    display: flex; align-items: center; gap: 8px;
+    background: #25D366; color: #fff;
+    padding: 12px 18px 12px 14px; border-radius: 50px;
+    text-decoration: none; font-family: "DM Sans", sans-serif;
+    font-size: 0.88rem; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: all 0.3s ease;
+  }
+  .wa-float:hover { background: #1ebe5d; box-shadow: 0 6px 28px rgba(37,211,102,0.55); transform: translateY(-3px); }
+  .wa-float:active { transform: translateY(0); }
+  .wa-float-label { letter-spacing: 0.03em; }
+  @media(max-width:480px) { .wa-float { padding: 12px; border-radius: 50%; } .wa-float-label { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-img">
+      <img src="img/logomiyu.jpg" alt="Mi;Yu Logo" onerror="this.style.display='none';this.parentNode.innerHTML='&#9749;'">
+    </div>
+    <div class="nav-logo-info">
+      <div class="nav-logo-name">Mi<span>;</span>Yu Coffee &amp; Store</div>
+      <div class="nav-logo-sub">Coffee &amp; Food</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="menu.html" class="nav-btn">Menu</a>
+    <a href="locations.html" class="nav-btn active">Locations</a>
+    <a href="gallery.html" class="nav-btn">Gallery</a>
+  </div>
+</nav>
+
+<div class="hours-banner">Open today &nbsp;&middot;&nbsp; Mon&ndash;Fri 7:00 AM &ndash; 10:00 PM &nbsp;&middot;&nbsp; Sat&ndash;Sun 8:00 AM &ndash; 11:00 PM</div>
+
+<div class="page-hero">
+  <p class="page-eyebrow">Come find us</p>
+  <h1 class="page-title">Our <em>Location</em></h1>
+  <p class="page-sub">A cozy corner of the city, where Mi meets Yu.</p>
+</div>
+
+<div class="location-section">
+  <div class="location-wrapper reveal">
+
+    <div class="loc-info">
+      <div>
+        <div class="loc-badge">Our Store</div>
+        <h2 class="loc-name">Mi;Yu Coffee &amp; Store</h2>
+        <p class="loc-area">Central District</p>
+        <div class="loc-divider"></div>
+
+        <div class="loc-details">
+          <div class="loc-detail">
+            <div class="loc-detail-icon">&#128205;</div>
+            <div>
+              <div class="loc-detail-label">Address</div>
+              <div class="loc-detail-value">Jl. Setia Budi, Besusu Tengah, Kec. Palu Timur, Kota Palu, Sulawesi Tengah</div>
+            </div>
+          </div>
+          <div class="loc-detail">
+            <div class="loc-detail-icon">&#128222;</div>
+            <div>
+              <div class="loc-detail-label">Phone</div>
+              <div class="loc-detail-value">085147774497</div>
+            </div>
+          </div>
+          <div class="loc-detail">
+            <div class="loc-detail-icon">&#9993;</div>
+            <div>
+              <div class="loc-detail-label">Email</div>
+              <div class="loc-detail-value">miyu.coffeee@gmail.com</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hours-grid">
+          <div class="hours-grid-title">Opening Hours</div>
+          <div class="hours-row" data-day="1"><span class="day">Monday</span><span class="time">9:00 AM &ndash; 3:00 AM</span></div>
+          <div class="hours-row" data-day="2"><span class="day">Tuesday</span><span class="time">9:00 AM &ndash; 3:00 AM</span></div>
+          <div class="hours-row" data-day="3"><span class="day">Wednesday</span><span class="time">9:00 AM &ndash; 3:00AM</span></div>
+          <div class="hours-row" data-day="4"><span class="day">Thursday</span><span class="time">9:00 AM &ndash; 3:00 AM</span></div>
+          <div class="hours-row" data-day="5"><span class="day">Friday</span><span class="time">9:00 AM &ndash; 3:00 AM</span></div>
+          <div class="hours-row" data-day="6"><span class="day">Saturday</span><span class="time">10:00 AM &ndash; 4:00 AM</span></div>
+          <div class="hours-row" data-day="0"><span class="day">Sunday</span><span class="time">10:00 AM &ndash; 4:00 AM</span></div>
+        </div>
+
+        <div class="loc-features">
+          <span class="loc-feat">Dine-in</span>
+          <span class="loc-feat">Takeaway</span>
+          <span class="loc-feat">Free WiFi</span>
+          <span class="loc-feat">Live Music</span>
+          <span class="loc-feat">Accessible</span>
+        </div>
+      </div>
+
+      <div class="loc-btns">
+        <a class="btn-directions" href="https://maps.app.goo.gl/f3V4RmGYZgUB7fPP7" target="_blank">Get Directions</a>
+        <a class="btn-call" href="https://wa.me/6285147774497" target="_blank" rel="noopener">Call Us</a>
+      </div>
+    </div>
+
+    <div class="loc-map-panel">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3843.8899752724574!2d119.87543907478994!3d-0.8923291990990299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d8bed080a7213b9%3A0x7ffa5b519623fdc4!2sMiYu%20Coffee%20and%20Eatery!5e1!3m2!1sid!2sid!4v1772878364118!5m2!1sid!2sid"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="MiYu Coffee Location">
+      </iframe>
+      <div class="map-pin-card">
+        <div class="map-pin-name">Mi;Yu Coffee &amp; Store</div>
+        <div class="map-pin-addr">Jl. Setia Budi, Besusu Tengah, Kec. Palu Timur, Kota Palu, Sulawesi Tengah</div>
+        <div class="map-open"><span class="map-dot"></span> Open now</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>&copy; 2025 <span>Mi;Yu Coffee &amp; Store</span>. Our Brew Like Mi n Yu</footer>
+
+<a href="https://wa.me/6285147774497?text=Halo%20Mi%3BYu%20Coffee%2C%20saya%20ingin%20melakukan%20booking%20meja.%20Apakah%20ada%20tempat%20tersedia%3F%20%F0%9F%98%8A" target="_blank" rel="noopener" class="wa-float" title="Booking via WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 1.5C7.1 1.5 1.5 7.1 1.5 14c0 2.2.6 4.3 1.6 6.1L1.5 26.5l6.6-1.6c1.7.9 3.7 1.5 5.9 1.5 6.9 0 12.5-5.6 12.5-12.5S20.9 1.5 14 1.5z" fill="white"/>
+    <path d="M20.5 17.4c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6 0-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5-.1-.1-.3-.2-.6-.3z" fill="#25D366"/>
+  </svg>
+  <span class="wa-float-label">Booking</span>
+</a>
+
+<script>
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.classList.add("visible");
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".reveal").forEach(function(el) { obs.observe(el); });
+
+  var today = new Date().getDay();
+  document.querySelectorAll(".hours-row").forEach(function(row) {
+    if (parseInt(row.dataset.day) === today) {
+      row.classList.add("today");
+      row.querySelector(".day").textContent += " (Today)";
+    }
+  });
+</script>
+</body>
+</html>

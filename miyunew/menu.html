@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Mi;Yu Coffee & Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --espresso: #1E0F08; --roast: #3B1F10; --terra: #C4622D;
+    --amber: #E8935A; --sand: #F0DEC8; --ivory: #FAF5EE;
+    --white: #FFFCF8; --text: #1E0F08; --muted: #7A5540;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--ivory); color: var(--text); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(30,15,8,0.97); backdrop-filter: blur(14px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px; border-bottom: 1px solid rgba(196,98,45,0.2);
+  }
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(30,15,8,0.97); backdrop-filter: blur(14px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px;
+    border-bottom: 1px solid rgba(196,98,45,0.2);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-img {
+    width: 44px; height: 44px; border-radius: 10px;
+    overflow: hidden; flex-shrink: 0; background: #1a1a2e;
+  }
+  .nav-logo-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .nav-logo-info { display: flex; flex-direction: column; gap: 1px; }
+  .nav-logo-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 700; color: var(--sand);
+    letter-spacing: 0.06em; line-height: 1;
+  }
+  .nav-logo-name span { color: var(--amber); }
+  .nav-logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem; font-weight: 400;
+    color: rgba(240,222,200,0.4); letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .nav-links { display: flex; gap: 0.3rem; }
+  .nav-btn {
+    background: none; border: none; color: rgba(240,222,200,0.6);
+    font-family: 'DM Sans', sans-serif; font-size: 0.87rem;
+    cursor: pointer; padding: 0.45rem 1rem; border-radius: 50px;
+    transition: all 0.25s; text-decoration: none; display: inline-block;
+  }
+  .nav-btn:hover, .nav-btn.active { color: var(--amber); background: rgba(196,98,45,0.12); }
+
+  .page-hero {
+    padding: 120px 5% 65px;
+    background: radial-gradient(ellipse at 30% 70%, #4A2010 0%, #1E0F08 55%, #0D0503 100%);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 100%, rgba(196,98,45,0.12) 0%, transparent 60%); }
+  .page-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.8rem; font-weight: 500; display: flex; align-items: center; gap: 0.6rem; animation: fadeUp 0.7s ease both; position: relative; z-index: 1; }
+  .page-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--amber); }
+  .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 300; color: var(--sand); animation: fadeUp 0.8s 0.1s ease both; position: relative; z-index: 1; }
+  .page-title em { color: var(--amber); font-style: italic; font-weight: 600; }
+  .page-sub { color: rgba(240,222,200,0.45); font-size: 0.9rem; margin-top: 0.7rem; animation: fadeUp 0.9s 0.2s ease both; position: relative; z-index: 1; font-style: italic; }
+
+  .filter-bar { position: relative; z-index: 1; display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; padding: 2.5rem 5% 0; }
+  .filter-btn { background: var(--white); border: 1.5px solid rgba(30,15,8,0.12); color: var(--muted); padding: 0.5rem 1.4rem; border-radius: 4px; font-family: 'Outfit', sans-serif; font-size: 0.84rem; font-weight: 500; cursor: pointer; transition: all 0.25s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--espresso); color: var(--sand); border-color: var(--espresso); }
+
+  .menu-section { padding: 50px 5% 80px; max-width: 1200px; margin: 0 auto; }
+  .menu-category { position: relative; z-index: 1; margin-bottom: 4rem; }
+  .category-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+  .category-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--espresso); }
+  .category-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(30,15,8,0.15), transparent); }
+
+  .menu-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.8rem; }
+
+  .menu-item {
+    background: var(--white); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(30,15,8,0.07);
+    transition: transform 0.35s, box-shadow 0.35s;
+  }
+  .menu-item:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(30,15,8,0.13); }
+
+  .item-img {
+    aspect-ratio: 9/16; position: relative; overflow: hidden;
+  }
+  .item-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .item-img-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+  .item-img::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 85%, rgba(196,98,45,0.18) 0%, transparent 70%); pointer-events: none; z-index: 1; }
+
+  .item-body { padding: 1.4rem 1.6rem 1.8rem; }
+  .item-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--espresso); margin-bottom: 0.4rem; }
+  .item-desc { font-size: 0.81rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+  .item-footer { display: flex; align-items: center; justify-content: space-between; }
+  .item-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .item-tag { background: rgba(196,98,45,0.08); color: var(--terra); font-size: 0.67rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 3px; letter-spacing: 0.06em; }
+  .item-price { font-size: 1rem; font-weight: 600; color: var(--espresso); }
+
+  .menu-cta { text-align: center; margin-top: 3.5rem; }
+  .btn-view-all {
+    display: inline-block; text-decoration: none;
+    background: var(--espresso); color: var(--sand);
+    padding: 0.9rem 3rem; border-radius: 4px;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.04em; transition: all 0.25s;
+    border: 1.5px solid var(--espresso);
+  }
+  .btn-view-all:hover { background: none; color: var(--espresso); transform: translateY(-2px); }
+  .filter-btn-pdf { text-decoration: none; }
+  .filter-btn:hover, .filter-btn-pdf:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .filter-btn:active, .filter-btn-pdf:active { box-shadow: 0 2px 6px rgba(0,0,0,0.35); transform: translateY(1px); }
+
+  .reveal { opacity:0; transform:translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+  footer { background: var(--espresso); color: rgba(240,222,200,0.4); text-align: center; padding: 2rem; font-size: 0.78rem; }
+  footer span { color: var(--amber); }
+  @media(max-width:600px) { .menu-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-img">
+      <img src="img/logomiyu.jpg" alt="Mi;Yu Logo" onerror="this.style.display='none';this.parentNode.innerHTML='&#9749;'">
+    </div>
+    <div class="nav-logo-info">
+      <div class="nav-logo-name">Mi<span>;</span>Yu Coffee &amp; Store</div>
+      <div class="nav-logo-sub">Coffee &amp; Food</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="menu.html" class="nav-btn active">Menu</a>
+    <a href="locations.html" class="nav-btn">Locations</a>
+    <a href="gallery.html" class="nav-btn">Gallery</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="page-eyebrow">Crafted for All</p>
+  <h1 class="page-title">Our <em>Menu</em></h1>
+  <p class="page-sub">Every item made with intention, every flavor a shared memory.</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterMenu('all',this)">All</button>
+  <button class="filter-btn" onclick="filterMenu('signature',this)">Signature</button>
+  <button class="filter-btn" onclick="filterMenu('latte',this)">Latte Series</button>
+  <button class="filter-btn" onclick="filterMenu('classic',this)">Classic Coffee</button>
+  <button class="filter-btn" onclick="filterMenu('milk',this)">Milk Series</button>
+  <button class="filter-btn" onclick="filterMenu('regal',this)">Regal Series</button>
+  <button class="filter-btn" onclick="filterMenu('manualbrew',this)">Manual Brew</button>
+  <button class="filter-btn" onclick="filterMenu('tea',this)">Tea Series</button>
+  <button class="filter-btn" onclick="filterMenu('americano',this)">Americano Fruity</button>
+  <button class="filter-btn" onclick="filterMenu('food',this)">Miyu Foods</button>
+  <button class="filter-btn" onclick="filterMenu('snacks',this)">Miyu Snack</button>
+  <a href="menumiyu.pdf" target="_blank" class="filter-btn filter-btn-pdf">📄 View All Menu</a>
+</div>
+
+<div class="menu-section">
+
+  <div class="menu-category" data-cat="signature">
+    <div class="category-header"><h2 class="category-title">Signature</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#1E0F08,#6B3010);"><img src="img/menu/signature/komiyu.JPG" alt="Ko Mi;Yu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Ko Mi;Yu</div><div class="item-desc">Kopi susu khas Mi;Yu dengan racikan spesial yang menjadi favorit pelanggan setia.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 23K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 23.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#1E0F08,#6B3010);"><img src="img/menu/signature/butterscotch.jpeg" alt="Butterscotch" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Butterscotch</div><div class="item-desc">Rasa butterscotch manis legit berpadu espresso dan susu yang lembut.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 28K</span></div><div class="item-price">Rp 28.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#2A1008,#8A4020);"><img src="img/menu/signature/honneycoffee.JPG" alt="Honey Coffee" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍯</div></div><div class="item-body"><div class="item-name">Honey Coffee</div><div class="item-desc">Espresso dengan sentuhan madu alami yang memberikan manis hangat dan natural.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 25K</span><span class="item-tag">ICE 28K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.15s"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#4A2010);"><img src="img/menu/signature/biscof.jpeg" alt="Biscoff Coffee" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Biscoff Coffee</div><div class="item-desc">Perpaduan espresso dengan spread biscoff karamel yang ikonik dan renyah.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 30K</span></div><div class="item-price">Rp 30.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.2s"><div class="item-img" style="background:linear-gradient(145deg,#12280A,#1A4030);"><img src="img/menu/signature/coffeepandan.JPG" alt="Pandan Coffee" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🌿</div></div><div class="item-body"><div class="item-name">Pandan Coffee</div><div class="item-desc">Aroma pandan wangi berpadu espresso dan susu untuk rasa yang unik dan segar.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.25s"><div class="item-img" style="background:linear-gradient(145deg,#0D0503,#1E0F08);"><img src="img/menu/signature/arencoffee.JPG" alt="Coffee Aren" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍬</div></div><div class="item-body"><div class="item-name">Coffee Aren</div><div class="item-desc">Kopi robusta dengan gula aren asli yang memberikan manis karamel alami khas.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="americano">
+    <div class="category-header"><h2 class="category-title">Americano Fruity</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#1E0F08,#4A2A18);"><img src="img/menu/americanofruity/miyucano.jpeg" alt="Miyucano" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Miyucano</div><div class="item-desc">Americano khas Mi;Yu dengan sentuhan fruity yang menyegarkan dan unik.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#0D1A0A,#2A5018);"><img src="img/menu/americanofruity/picano.jpeg" alt="Picano" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍈</div></div><div class="item-body"><div class="item-name">Picano</div><div class="item-desc">Perpaduan espresso dan soda buah tropis yang segar dan penuh rasa.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#1A2A0A,#4A7020);"><img src="fruity3.jpg" alt="Lemiyu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍋</div></div><div class="item-body"><div class="item-name">Lemiyu</div><div class="item-desc">Americano dengan lemon segar yang asam dan menyegarkan — khas Mi;Yu.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="manualbrew">
+    <div class="category-header"><h2 class="category-title">Manual Brew</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#3A1808);"><img src="img/menu/manualbrew/vietnam.jpg" alt="Vietnam Drip" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Vietnam Drip</div><div class="item-desc">Kopi tetes khas Vietnam yang pekat, disajikan panas dengan cita rasa bold.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 20K</span></div><div class="item-price">Rp 20.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#2A1008,#5A2A10);"><img src="img/menu/manualbrew/v60.JPG" alt="V60" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">V60</div><div class="item-desc">Pour-over V60 yang menghasilkan kopi bersih, bright, dan penuh nuansa rasa.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#0D1A0A,#1A3A18);"><img src="img/menu/manualbrew/japanese.jpg" alt="V60 Japanese" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🧊</div></div><div class="item-body"><div class="item-name">V60 Japanese</div><div class="item-desc">V60 diseduh langsung di atas es batu, menghasilkan brew segar dan jernih.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 28K</span></div><div class="item-price">Rp 28.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="latte">
+    <div class="category-header"><h2 class="category-title">Latte Series</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#2A0E04,#8A4020);"><img src="latte1.jpg" alt="Vanilla Latte" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Vanilla Latte</div><div class="item-desc">Espresso dengan susu steamed dan sirup vanilla lembut yang harum dan menenangkan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 23K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 23.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#5C2A10);"><img src="latte2.jpg" alt="Hazelnut Latte" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Hazelnut Latte</div><div class="item-desc">Espresso, susu, dan sirup hazelnut yang kaya rasa nutty dalam setiap tegukan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 23K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 23.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#3A1A05,#9A5A2A);"><img src="img/menu/latteseries/popcorncoffee.JPG" alt="Popcorn Latte" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Popcorn Latte</div><div class="item-desc">Sensasi unik rasa popcorn buttery berpadu espresso dan susu yang creamy.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 23K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 23.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.15s"><div class="item-img" style="background:linear-gradient(145deg,#2A1A04,#C4622D);"><img src="img/menu/latteseries/caramel.jpeg" alt="Caramel Latte" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Caramel Latte</div><div class="item-desc">Espresso dengan susu steamed dan lelehan karamel manis yang menggoda.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 23K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 23.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="classic">
+    <div class="category-header"><h2 class="category-title">Classic Coffee</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#6B3018);"><img src="classic1.jpg" alt="Americano" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Americano</div><div class="item-desc">Espresso yang diencerkan dengan air panas, bersih dan tegas rasanya.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 22K</span><span class="item-tag">ICE 20K</span></div><div class="item-price">Rp 22.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#2A0E04,#7A3018);"><img src="img/menu/classiscoffee/latte hot.JPG" alt="Coffee Latte" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🥛</div></div><div class="item-body"><div class="item-name">Coffee Latte</div><div class="item-desc">Espresso klasik berpadu susu steamed creamy untuk sajian nikmat setiap hari.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 27K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 27.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#5A2A10);"><img src="img/menu/classiscoffee/cuppucino.jpeg" alt="Cappuccino" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">☕</div></div><div class="item-body"><div class="item-name">Cappuccino</div><div class="item-desc">Espresso dengan foam susu tebal yang ringan dan berbusa sempurna.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 27K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 27.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="tea">
+    <div class="category-header"><h2 class="category-title">Tea Series</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#1A2A0A,#4A7020);"><img src="img/menu/teaseries/lecitea.JPG" alt="Lychee Tea" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍵</div></div><div class="item-body"><div class="item-name">Lychee Tea</div><div class="item-desc">Teh dengan sirup lychee segar yang harum, manis, dan menyegarkan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#2A1A0A,#C4622D);"><img src="img/menu/teaseries/peachtea.JPG" alt="Peach Tea" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍑</div></div><div class="item-body"><div class="item-name">Peach Tea</div><div class="item-desc">Teh segar dengan rasa peach yang manis dan aroma buah yang memikat.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#1A2A0A,#5A8020);"><img src="img/menu/teaseries/lemontea.JPG" alt="Lemon Tea" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍋</div></div><div class="item-body"><div class="item-name">Lemon Tea</div><div class="item-desc">Teh dingin dengan perasan lemon segar yang asam manis dan menyegarkan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.15s"><div class="item-img" style="background:linear-gradient(145deg,#3A1A04,#C4622D);"><img src="img/menu/teaseries/thaitea.JPG" alt="Thai Tea" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🧡</div></div><div class="item-body"><div class="item-name">Thai Tea</div><div class="item-desc">Teh Thailand dengan susu kental manis yang creamy, khas dan adiktif.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="milk">
+    <div class="category-header"><h2 class="category-title">Milk Series</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#5A2A30);"><img src="img/menu/milkseries/cokelatberry.jpg  " alt="Choco Berry" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍓</div></div><div class="item-body"><div class="item-name">Choco Berry</div><div class="item-desc">Perpaduan coklat dan berry segar yang unik — manis, asam, dan creamy.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#4A1E08);"><img src="img/menu/milkseries/cokelat.jpg" alt="Chocolate" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍫</div></div><div class="item-body"><div class="item-name">Chocolate</div><div class="item-desc">Coklat kaya rasa berpadu susu steamed yang lembut dan menghangatkan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 25K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#5C2A10);"><img src="img/menu/milkseries/cokelathuzelnut.jpg" alt="Chocolate Hazelnut" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍫</div></div><div class="item-body"><div class="item-name">Chocolate Hazelnut</div><div class="item-desc">Kombinasi coklat dan hazelnut yang kaya rasa dalam satu tegukan nikmat.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 28K</span></div><div class="item-price">Rp 28.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.15s"><div class="item-img" style="background:linear-gradient(145deg,#12280A,#2A5018);"><img src="img/menu/milkseries/matcha.jpg" alt="Matcha" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍵</div></div><div class="item-body"><div class="item-name">Matcha</div><div class="item-desc">Matcha Jepang premium dengan susu, rasa earthy yang autentik dan menyegarkan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">HOT 25K</span><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.2s"><div class="item-img" style="background:linear-gradient(145deg,#12280A,#2A6020);"><img src="img/menu/milkseries/matchaberry.jpg" alt="Matcha Berry" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍵</div></div><div class="item-body"><div class="item-name">Matcha Berry</div><div class="item-desc">Matcha premium dengan sensasi buah berry yang segar dan berwarna cerah.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 28K</span></div><div class="item-price">Rp 28.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.25s"><div class="item-img" style="background:linear-gradient(145deg,#12280A,#1A4030);"><img src="img/menu/milkseries/ceremony.jpeg" alt="Matcha Ceremony" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍵</div></div><div class="item-body"><div class="item-name">Matcha Ceremony</div><div class="item-desc">Matcha ceremonial premium grade — sajian istimewa untuk penggemar matcha sejati.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">PREMIUM</span><span class="item-tag">HOT/ICE 40K</span></div><div class="item-price">Rp 40.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.3s"><div class="item-img" style="background:linear-gradient(145deg,#5A0A0A,#C04040);"><img src="img/menu/milkseries/redvelvet.JPG" alt="Red Velvet" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍓</div></div><div class="item-body"><div class="item-name">Red Velvet</div><div class="item-desc">Perpaduan red velvet creamy dengan susu yang lembut dan berwarna cantik.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="regal">
+    <div class="category-header"><h2 class="category-title">Regal Series</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#2A1A04,#8A5020);"><img src="img/menu/regalseries/kopiregal.jpeg" alt="Kopi Regal" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍪</div></div><div class="item-body"><div class="item-name">Kopi Regal</div><div class="item-desc">Kopi susu dengan taburan biskuit Regal yang renyah dan ikonik.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#7A4020);"><img src="img/menu/regalseries/vanillaregal.jpeg" alt="Vanilla Regal" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍪</div></div><div class="item-body"><div class="item-name">Vanilla Regal</div><div class="item-desc">Susu vanilla lembut dengan taburan biskuit Regal yang crunchy di atasnya.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">ICE 25K</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="food">
+    <div class="category-header"><h2 class="category-title">Miyu Foods</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#5A2A10);"><img src="img/menu/foods/miyurego.jpeg" alt="Miyu Rego" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🥪</div></div><div class="item-body"><div class="item-name">Miyu Rego</div><div class="item-desc">Camilan andalan Mi;Yu yang renyah dan mengenyangkan dengan bumbu spesial.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">MAKANAN</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#3A1808);"><img src="img/menu/foods/miyurupa.jpeg" alt="Miyu Rupa" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍢</div></div><div class="item-body"><div class="item-name">Miyu Rupa</div><div class="item-desc">Jajanan khas Mi;Yu dengan tampilan menarik dan rasa yang tidak mengecewakan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">MAKANAN</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#2A1A04,#8A5020);"><img src="food3.jpg" alt="Yamiyu Bakar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🔥</div></div><div class="item-body"><div class="item-name">Yamiyu Bakar</div><div class="item-desc">Yam bakar dengan bumbu khas Mi;Yu yang smoky dan gurih, nikmat sekali.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">BAKAR</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.15s"><div class="item-img" style="background:linear-gradient(145deg,#1A0A08,#4A2018);"><img src="food4.jpg" alt="Cumiyu Bakar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🦑</div></div><div class="item-body"><div class="item-name">Cumiyu Bakar</div><div class="item-desc">Cumi bakar segar dengan bumbu rempah Mi;Yu yang pedas manis menggoda.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">BAKAR</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.2s"><div class="item-img" style="background:linear-gradient(145deg,#2A1A04,#7A4020);"><img src="food5.jpg" alt="Beef Miyu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🥩</div></div><div class="item-body"><div class="item-name">Beef Miyu</div><div class="item-desc">Daging sapi pilihan diolah dengan bumbu khas Mi;Yu yang kaya rempah.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">MAKANAN</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.25s"><div class="item-img" style="background:linear-gradient(145deg,#3A1A05,#9A5A2A);"><img src="img/menu/foods/kwetiau.jpeg" alt="Kwetiau Goreng" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍜</div></div><div class="item-body"><div class="item-name">Kwetiau Goreng</div><div class="item-desc">Kwetiau goreng dengan bumbu khas yang gurih, lezat, dan mengenyangkan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">MAKANAN</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.3s"><div class="item-img" style="background:linear-gradient(145deg,#2A1A04,#C4622D);"><img src="food7.jpg" alt="Nasi Ayam Chili Padi" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🌶️</div></div><div class="item-body"><div class="item-name">Nasi Ayam Chili Padi</div><div class="item-desc">Nasi ayam pedas dengan sambal chili padi yang menggigit dan bikin berkeringat.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">PEDAS</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.35s"><div class="item-img" style="background:linear-gradient(145deg,#2A1A04,#8A5020);"><img src="img/menu/foods/midangyu.jpeg" alt="Midangyu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍜</div></div><div class="item-body"><div class="item-name">Midangyu</div><div class="item-desc">Menu mie andalan Mi;Yu dengan bumbu rahasia yang bikin ketagihan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">MAKANAN</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.4s"><div class="item-img" style="background:linear-gradient(145deg,#3A2A04,#8A7020);"><img src="food9.jpg" alt="Nasi Telur Ponti" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍳</div></div><div class="item-body"><div class="item-name">Nasi Telur Ponti</div><div class="item-desc">Nasi telur gaya Pontianak yang gurih dan simpel, cocok untuk sarapan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">MAKANAN</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.45s"><div class="item-img" style="background:linear-gradient(145deg,#1A0800,#5A2010);"><img src="food10.jpg" alt="Nasi Ayam Palekko" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍗</div></div><div class="item-body"><div class="item-name">Nasi Ayam Palekko</div><div class="item-desc">Ayam palekko khas Sulawesi dengan bumbu rempah kuat yang autentik.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">KHAS SULAWESI</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-category" data-cat="snacks">
+    <div class="category-header"><h2 class="category-title">Miyu Snack</h2><div class="category-line"></div></div>
+    <div class="menu-grid">
+      <div class="menu-item reveal"><div class="item-img" style="background:linear-gradient(145deg,#7A4820,#C4622D);"><img src="img/menu/snacks/kebab.jpeg" alt="Kebab Miyu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🌯</div></div><div class="item-body"><div class="item-name">Kebab Miyu</div><div class="item-desc">Kebab khas Mi;Yu dengan isian daging, sayur segar, dan saus spesial.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.05s"><div class="item-img" style="background:linear-gradient(145deg,#2A1A04,#8A5020);"><img src="img/menu/snacks/mixplatter.jpeg" alt="Mix Platter" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍽️</div></div><div class="item-body"><div class="item-name">Mix Platter</div><div class="item-desc">Kombinasi berbagai camilan pilihan dalam satu piring — cocok untuk berbagi.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.1s"><div class="item-img" style="background:linear-gradient(145deg,#3A2A04,#9A7020);"><img src="img/menu/snacks/kentang.jpeg" alt="Fried Fries" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍟</div></div><div class="item-body"><div class="item-name">Fried Fries</div><div class="item-desc">Kentang goreng crispy keemasan yang renyah dan gurih di setiap gigitan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 20.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.15s"><div class="item-img" style="background:linear-gradient(145deg,#3A1A05,#C4622D);"><img src="img/menu/snacks/ayampopcorn.jpeg" alt="Ayam Popcorn" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍗</div></div><div class="item-body"><div class="item-name">Ayam Popcorn</div><div class="item-desc">Popcorn chicken crispy yang renyah di luar, juicy di dalam, bumbu spesial.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 20.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.2s"><div class="item-img" style="background:linear-gradient(145deg,#3A2A04,#8A7020);"><img src="snack5.jpg" alt="Tahu Walik" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🟡</div></div><div class="item-body"><div class="item-name">Tahu Walik</div><div class="item-desc">Tahu dibalik isi daging cincang berbumbu, digoreng crispy hingga keemasan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 20.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.25s"><div class="item-img" style="background:linear-gradient(145deg,#3A2A04,#C4A020);"><img src="snack6.jpg" alt="Pisang Tipis" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍌</div></div><div class="item-body"><div class="item-name">Pisang Tipis</div><div class="item-desc">Pisang diiris tipis lalu digoreng renyah, ringan dan cocok menemani kopi.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 20.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.3s"><div class="item-img" style="background:linear-gradient(145deg,#2A2004,#8A7820);"><img src="snack7.jpg" alt="Ubi Goreng" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍠</div></div><div class="item-body"><div class="item-name">Ubi Goreng</div><div class="item-desc">Ubi manis digoreng hingga keemasan, manis alami dan mengenyangkan.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 20.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.35s"><div class="item-img" style="background:linear-gradient(145deg,#3A2A04,#C4A020);"><img src="snack8.jpg" alt="Pisang Wijen" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍌</div></div><div class="item-body"><div class="item-name">Pisang Wijen</div><div class="item-desc">Pisang goreng berlapis wijen renyah dengan manisnya pisang yang natural.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 25.000</div></div></div></div>
+      <div class="menu-item reveal" style="transition-delay:0.4s"><div class="item-img" style="background:linear-gradient(145deg,#2A1A04,#C4822D);"><img src="snack9.jpg" alt="Roti Kaya" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-fallback" style="display:none;">🍞</div></div><div class="item-body"><div class="item-name">Roti Kaya</div><div class="item-desc">Roti panggang dengan selai kaya pandan yang manis legit dan harum.</div><div class="item-footer"><div class="item-tags"><span class="item-tag">SNACK</span></div><div class="item-price">Rp 20.000</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="menu-cta reveal">
+    <a href="menumiyu.pdf" target="_blank" class="btn-view-all">View All Menu</a>
+  </div>
+</div>
+
+<footer>© 2025 <span>Mi;Yu Coffee & Store</span>. Our Brew Like Mi n Yu</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.menu-category').forEach(s => {
+      s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
+    });
+    document.querySelector('.menu-cta').style.display = '';
+  }
+</script>
+
+<!-- Floating WhatsApp Booking Button -->
+<a href="https://wa.me/6285147774497?text=Halo%20Mi%3BYu%20Coffee%2C%20saya%20ingin%20melakukan%20booking%20meja.%20Apakah%20ada%20tempat%20tersedia%3F%20%F0%9F%98%8A" target="_blank" rel="noopener" class="wa-float" title="Booking via WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 1.5C7.1 1.5 1.5 7.1 1.5 14c0 2.2.6 4.3 1.6 6.1L1.5 26.5l6.6-1.6c1.7.9 3.7 1.5 5.9 1.5 6.9 0 12.5-5.6 12.5-12.5S20.9 1.5 14 1.5z" fill="white"/>
+    <path d="M20.5 17.4c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6 0-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5-.1-.1-.3-.2-.6-.3z" fill="#25D366"/>
+  </svg>
+  <span class="wa-float-label">Booking</span>
+</a>
+
+<style>
+.wa-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  display: flex; align-items: center; gap: 8px;
+  background: #25D366; color: #fff;
+  padding: 12px 18px 12px 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-family: "DM Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: all 0.3s ease;
+}
+.wa-float:hover {
+  background: #1ebe5d;
+  box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+  transform: translateY(-3px);
+}
+.wa-float:active { transform: translateY(0); }
+.wa-float-label { letter-spacing: 0.03em; }
+@media(max-width:480px) {
+  .wa-float { padding: 12px; border-radius: 50%; }
+  .wa-float-label { display: none; }
+}
+</style>
+</body>
+</html>

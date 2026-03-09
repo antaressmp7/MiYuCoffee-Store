@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Mi;Yu Coffee & Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --espresso: #1E0F08; --roast: #3B1F10; --terra: #C4622D;
+    --amber: #E8935A; --sand: #F0DEC8; --ivory: #FAF5EE;
+    --white: #FFFCF8; --text: #1E0F08; --muted: #7A5540;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--ivory); color: var(--text); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(30,15,8,0.97); backdrop-filter: blur(14px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px; border-bottom: 1px solid rgba(196,98,45,0.2);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-img { width: 44px; height: 44px; border-radius: 10px; overflow: hidden; flex-shrink: 0; background: #1a1a2e; }
+  .nav-logo-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .nav-logo-info { display: flex; flex-direction: column; gap: 1px; }
+  .nav-logo-name { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--sand); letter-spacing: 0.06em; line-height: 1; }
+  .nav-logo-name span { color: var(--amber); }
+  .nav-logo-sub { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; font-weight: 400; color: rgba(240,222,200,0.4); letter-spacing: 0.06em; line-height: 1; }
+  .nav-links { display: flex; gap: 0.3rem; }
+  .nav-btn { background: none; border: none; color: rgba(240,222,200,0.6); font-family: 'DM Sans', sans-serif; font-size: 0.87rem; cursor: pointer; padding: 0.45rem 1rem; border-radius: 50px; transition: all 0.25s; text-decoration: none; display: inline-block; }
+  .nav-btn:hover, .nav-btn.active { color: var(--amber); background: rgba(196,98,45,0.12); }
+
+  .page-hero {
+    padding: 120px 5% 65px;
+    background: radial-gradient(ellipse at 30% 70%, #4A2010 0%, #1E0F08 55%, #0D0503 100%);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 100%, rgba(196,98,45,0.12) 0%, transparent 60%); }
+  .page-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.8rem; font-weight: 500; display: flex; align-items: center; gap: 0.6rem; animation: fadeUp 0.7s ease both; position: relative; z-index: 1; }
+  .page-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--amber); }
+  .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 300; color: var(--sand); animation: fadeUp 0.8s 0.1s ease both; position: relative; z-index: 1; }
+  .page-title em { color: var(--amber); font-style: italic; font-weight: 600; }
+  .page-sub { color: rgba(240,222,200,0.45); font-size: 0.9rem; margin-top: 0.7rem; animation: fadeUp 0.9s 0.2s ease both; position: relative; z-index: 1; font-style: italic; }
+
+  /* MASONRY */
+  .gallery-section { padding: 50px 5% 90px; max-width: 1200px; margin: 0 auto; }
+
+  .masonry { columns: 4; column-gap: 1rem; }
+
+  .gallery-item {
+    break-inside: avoid; margin-bottom: 1rem;
+    border-radius: 14px; overflow: hidden;
+    cursor: pointer; transition: transform 0.35s;
+  }
+  .gallery-item:hover { transform: scale(1.025); }
+
+  .gallery-visual {
+    width: 100%; border-radius: 14px;
+    overflow: hidden; position: relative;
+  }
+  .gallery-visual img {
+    width: 100%; height: 100%; display: block;
+    object-fit: cover; object-position: center;
+  }
+  .gallery-visual-fallback {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(13,5,3,0.96); backdrop-filter: blur(14px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox-inner {
+    max-width: 680px; width: 90%; background: var(--white);
+    border-radius: 20px; overflow: hidden;
+    transform: scale(0.9); transition: transform 0.3s;
+  }
+  .lightbox.open .lightbox-inner { transform: scale(1); }
+  .lightbox-img { width: 100%; height: 380px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; font-size: 6rem; }
+  .lightbox-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lightbox-close {
+    position: absolute; top: 20px; right: 20px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(240,222,200,0.08); border: 1px solid rgba(240,222,200,0.15);
+    color: var(--sand); font-size: 1.1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: background 0.25s;
+  }
+  .lightbox-close:hover { background: rgba(240,222,200,0.18); }
+
+  /* INSTA STRIP */
+  .insta-strip { background: var(--espresso); padding: 55px 5%; text-align: center; }
+  .insta-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--sand); margin-bottom: 0.5rem; }
+  .insta-title em { color: var(--amber); font-style: italic; }
+  .insta-sub { color: rgba(240,222,200,0.4); font-size: 0.87rem; margin-bottom: 1.5rem; font-style: italic; }
+  .insta-handle { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(196,98,45,0.12); border: 1px solid rgba(196,98,45,0.25); color: var(--amber); padding: 0.6rem 1.6rem; border-radius: 4px; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background 0.25s; letter-spacing: 0.04em; }
+  .insta-handle:hover { background: rgba(196,98,45,0.22); }
+
+  .reveal { opacity:0; transform:translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);} }
+
+  footer { background: var(--espresso); color: rgba(240,222,200,0.4); text-align: center; padding: 2rem; font-size: 0.78rem; border-top: 1px solid rgba(240,222,200,0.06); }
+  footer span { color: var(--amber); }
+
+  @media(max-width:900px){ .masonry { columns:3; } }
+  @media(max-width:600px){ .masonry { columns:2; } .lightbox-img { height:240px; font-size:4rem; } }
+  @media(max-width:400px){ .masonry { columns:1; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+        <div class="nav-logo-img">
+      <img src="img/logomiyu.jpg" alt="Mi;Yu Logo" onerror="this.style.display='none';this.parentNode.innerHTML='&#9749;'">
+    </div>
+    <div class="nav-logo-info">
+      <div class="nav-logo-name">Mi<span>;</span>Yu Coffee &amp; Store</div>
+      <div class="nav-logo-sub">Coffee &amp; Food</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="menu.html" class="nav-btn">Menu</a>
+    <a href="locations.html" class="nav-btn">Locations</a>
+    <a href="gallery.html" class="nav-btn active">Gallery</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="page-eyebrow">Moments worth savoring</p>
+  <h1 class="page-title">Our <em>Gallery</em></h1>
+  <p class="page-sub">A visual journey through every cup, every corner, every shared memory.</p>
+</div>
+
+<div class="gallery-section">
+  <div class="masonry">
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:250px;background:linear-gradient(145deg,#2A0E04,#C4622D);">
+        <img src="img/gallery1.jpg" alt="gallery1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🍮</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:180px;background:linear-gradient(145deg,#1A0800,#7A3018);">
+        <img src="img/gallery2.jpeg" alt="gallery2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🌸</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:330px;background:linear-gradient(145deg,#0D0503,#3A1808);">
+        <img src="img/gallery3.jpeg" alt="gallery3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🪑</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:210px;background:linear-gradient(145deg,#7A4820,#E8935A);">
+        <img src="img/gallery4.jpeg" alt="gallery4" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🥐</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:290px;background:linear-gradient(145deg,#1A0800,#4A1E08);">
+        <img src="img/gallery5.jpeg" alt="gallery5" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🍫</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:165px;background:linear-gradient(145deg,#5A2010,#C4622D);">
+        <img src="img/gallery6.jpeg" alt="gallery6" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">❤️</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:205px;background:linear-gradient(145deg,#1E0F08,#5A2A12);">
+        <img src="img/gallery7.jpeg" alt="gallery7" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🌅</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:265px;background:linear-gradient(145deg,#2A0E04,#7A3820);">
+        <img src="img/gallery8.jpeg" alt="gallery8" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🧁</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:225px;background:linear-gradient(145deg,#0D0503,#1E0F08);">
+        <img src="img/gallery9.jpeg" alt="gallery9" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🧊</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:195px;background:linear-gradient(145deg,#3A1808,#C4622D);">
+        <img src="img/gallery10.jpeg" alt="gallery10" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🌷</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:310px;background:linear-gradient(145deg,#1A0800,#5A2010);">
+        <img src="gallery11.jpg" alt="gallery11" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🎵</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:175px;background:linear-gradient(145deg,#7A4820,#E8935A);">
+        <img src="gallery12.jpg" alt="gallery12" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🍰</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:240px;background:linear-gradient(145deg,#12280A,#2A5018);">
+        <img src="gallery13.jpg" alt="gallery13" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🌿</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:185px;background:linear-gradient(145deg,#1E0F08,#3B1F10);">
+        <img src="gallery14.jpg" alt="gallery14" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">☕</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:270px;background:linear-gradient(145deg,#2A1A04,#9A5020);">
+        <img src="gallery15.jpg" alt="gallery15" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🧋</div>
+      </div>
+    </div>
+
+    <div class="gallery-item reveal">
+      <div class="gallery-visual" style="height:200px;background:linear-gradient(145deg,#1A0800,#6A2A10);">
+        <img src="gallery16.jpg" alt="gallery16" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="gallery-visual-fallback" style="display:none;">🫘</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <div class="lightbox-inner">
+    <div class="lightbox-img" id="lb-img"></div>
+  </div>
+</div>
+
+<div class="insta-strip">
+  <h2 class="insta-title reveal">Follow <em>Mi;Yu Coffee & Store</em></h2>
+  <p class="insta-sub reveal">Tag us in your Mi;Yu moments — Our Brew Like Mi n Yu</p>
+  <a href="https://www.instagram.com/mi.yu.coffee?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="insta-handle reveal">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4.5"/>
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+    </svg>
+    @mi.yu.coffee
+  </a>
+</div>
+
+<footer>© 2025 <span>Mi;Yu Coffee & Store</span>. Our Brew Like Mi n Yu</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  document.querySelectorAll('.gallery-item').forEach((item, index) => {
+    item.addEventListener('click', () => {
+      const el = item.querySelector('.gallery-visual');
+      const imgEl = el.querySelector('img');
+      const lbImg = document.getElementById('lb-img');
+      lbImg.innerHTML = '';
+      lbImg.style.background = el.style.background;
+      if (imgEl && imgEl.style.display !== 'none') {
+        const cloned = document.createElement('img');
+        cloned.src = imgEl.src;
+        cloned.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        lbImg.appendChild(cloned);
+      } else {
+        const fallback = el.querySelector('.gallery-visual-fallback');
+        lbImg.textContent = fallback ? fallback.textContent.trim() : '';
+      }
+      document.getElementById('lightbox').classList.add('open');
+    });
+  });
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeLightbox();
+  });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+</script>
+
+<!-- Floating WhatsApp Booking Button -->
+<a href="https://wa.me/6285147774497?text=Halo%20Mi%3BYu%20Coffee%2C%20saya%20ingin%20melakukan%20booking%20meja.%20Apakah%20ada%20tempat%20tersedia%3F%20%F0%9F%98%8A" target="_blank" rel="noopener" class="wa-float" title="Booking via WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 1.5C7.1 1.5 1.5 7.1 1.5 14c0 2.2.6 4.3 1.6 6.1L1.5 26.5l6.6-1.6c1.7.9 3.7 1.5 5.9 1.5 6.9 0 12.5-5.6 12.5-12.5S20.9 1.5 14 1.5z" fill="white"/>
+    <path d="M20.5 17.4c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6 0-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5-.1-.1-.3-.2-.6-.3z" fill="#25D366"/>
+  </svg>
+  <span class="wa-float-label">Booking</span>
+</a>
+
+<style>
+.wa-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  display: flex; align-items: center; gap: 8px;
+  background: #25D366; color: #fff;
+  padding: 12px 18px 12px 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-family: "DM Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: all 0.3s ease;
+}
+.wa-float:hover {
+  background: #1ebe5d;
+  box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+  transform: translateY(-3px);
+}
+.wa-float:active { transform: translateY(0); }
+.wa-float-label { letter-spacing: 0.03em; }
+@media(max-width:480px) {
+  .wa-float { padding: 12px; border-radius: 50%; }
+  .wa-float-label { display: none; }
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi;Yu Coffee & Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --espresso: #1E0F08;
+    --roast: #3B1F10;
+    --terra: #C4622D;
+    --amber: #E8935A;
+    --sand: #F0DEC8;
+    --ivory: #FAF5EE;
+    --white: #a38866;
+    --text: #1E0F08;
+    --muted: #7A5540;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--ivory); color: var(--text); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(30,15,8,0.97); backdrop-filter: blur(14px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px;
+    border-bottom: 1px solid rgba(196,98,45,0.2);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-img {
+    width: 44px; height: 44px; border-radius: 10px;
+    overflow: hidden; flex-shrink: 0; background: #1a1a2e;
+  }
+  .nav-logo-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .nav-logo-info { display: flex; flex-direction: column; gap: 1px; }
+  .nav-logo-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 700; color: var(--sand);
+    letter-spacing: 0.06em; line-height: 1;
+  }
+  .nav-logo-name span { color: var(--amber); }
+  .nav-logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem; font-weight: 400;
+    color: rgba(240,222,200,0.4); letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .nav-links { display: flex; gap: 0.3rem; }
+  .nav-btn {
+    background: none; border: none; color: rgba(240,222,200,0.6);
+    font-family: 'DM Sans', sans-serif; font-size: 0.87rem;
+    cursor: pointer; padding: 0.45rem 1rem; border-radius: 50px;
+    transition: all 0.25s; text-decoration: none; display: inline-block;
+  }
+  .nav-btn:hover, .nav-btn.active { color: var(--amber); background: rgba(196,98,45,0.12); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 25% 60%, #4A2010 0%, #1E0F08 55%, #0D0503 100%);
+    display: flex; align-items: center;
+    padding: 100px 5% 60px;
+    position: relative; overflow: hidden;
+  }
+
+  /* Grain texture */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  /* Decorative circle */
+  .hero-circle {
+    position: absolute; right: -80px; top: 50%;
+    transform: translateY(-50%);
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #5A2A12 0%, #2A1008 60%, transparent 100%);
+    opacity: 0.6;
+  }
+  .hero-circle-ring {
+    position: absolute; right: -20px; top: 50%;
+    transform: translateY(-50%);
+    width: 580px; height: 580px;
+    border-radius: 50%;
+    border: 1px solid rgba(196,98,45,0.15);
+  }
+
+  .hero-content { flex: 1; max-width: 560px; position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 1.4rem; font-weight: 500;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--amber); }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6.5vw, 5.2rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--sand); margin-bottom: 0.5rem;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+  .hero-title strong { font-weight: 700; display: block; }
+  .hero-title em { color: var(--amber); font-style: italic; }
+
+  .hero-slogan {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-style: normal; font-weight: 400;
+    color: rgba(240,222,200,0.6); margin-bottom: 2.2rem;
+    animation: fadeUp 1s 0.2s ease both;
+    line-height: 1.7;
+  }
+
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--terra); color: var(--sand);
+    border: none; padding: 0.85rem 2.2rem; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; transition: all 0.25s; letter-spacing: 0.04em;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--amber); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(196,98,45,0.4); }
+  .btn-outline {
+    background: none; color: var(--sand);
+    border: 1.5px solid rgba(240,222,200,0.3); padding: 0.85rem 2.2rem; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 400;
+    cursor: pointer; transition: all 0.25s; text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* ── ORDER POPUP ── */
+  .order-popup-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(13,5,3,0.7); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .order-popup-overlay.open { opacity: 1; pointer-events: all; }
+
+  .order-popup {
+    background: var(--white); border-radius: 20px;
+    padding: 2.4rem 2.2rem 2rem;
+    max-width: 360px; width: 90%;
+    box-shadow: 0 32px 80px rgba(13,5,3,0.35);
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s ease;
+    text-align: center; position: relative;
+  }
+  .order-popup-overlay.open .order-popup { transform: translateY(0) scale(1); }
+
+  .order-popup-close {
+    position: absolute; top: 14px; right: 16px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(30,15,8,0.06); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 1rem; transition: background 0.2s;
+  }
+  .order-popup-close:hover { background: rgba(30,15,8,0.12); }
+
+  .order-popup-icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
+  .order-popup-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem; font-weight: 700; color: var(--espresso);
+    margin-bottom: 0.4rem;
+  }
+  .order-popup-sub {
+    font-size: 0.82rem; color: var(--muted); margin-bottom: 1.8rem; line-height: 1.5;
+  }
+
+  .order-popup-btns { display: flex; flex-direction: column; gap: 0.85rem; }
+
+  .order-btn-grab {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0.95rem 1.5rem; border-radius: 10px; text-decoration: none;
+    transition: all 0.25s; border: none;
+    background: #00B14F; color: #ffffff;
+  }
+  .order-btn-grab:hover { background: #009940; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,177,79,0.35); }
+
+  .order-btn-go {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0.95rem 1.5rem; border-radius: 10px; text-decoration: none;
+    transition: all 0.25s; border: none;
+    background: #E82529; color: #ffffff;
+  }
+  .order-btn-go:hover { background: #CC1F22; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,37,41,0.3); }
+
+  .order-btn-logo { width: 22px; height: 22px; border-radius: 4px; flex-shrink: 0; }
+
+  .hero-image {
+    flex: 1; display: flex; justify-content: center; align-items: center;
+    position: relative; min-height: 500px;
+    animation: fadeIn 1.2s 0.2s ease both;
+  }
+
+  .hero-cup {
+    position: relative; z-index: 2;
+    width: 300px; height: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    animation: floatCup 5s ease-in-out infinite;
+    background: linear-gradient(150deg, #5A2A12 0%, #2A1008 50%, #0D0503 100%);
+  }
+  .hero-cup img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+  }
+  .hero-cup-fallback {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7rem;
+  }
+  @keyframes floatCup {
+    0%,100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-14px) rotate(1deg); }
+  }
+
+  .hero-tag {
+    position: absolute; bottom: 40px; right: -10px; z-index: 3;
+    background: rgba(30,15,8,0.85); backdrop-filter: blur(10px);
+    border: 1px solid rgba(196,98,45,0.25);
+    border-radius: 10px; padding: 0.8rem 1.2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem; font-style: italic;
+    color: var(--sand);
+  }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--amber); line-height: 1;
+  }
+  .stat-label { font-size: 0.72rem; color: rgba(240,222,200,0.45); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.2rem; }
+
+  /* ── SECTION COMMON ── */
+  .section-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--terra); font-weight: 600; margin-bottom: 0.6rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--terra); }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 600;
+    color: var(--espresso); line-height: 1.15;
+  }
+  .section-title em { color: var(--terra); font-style: italic; }
+
+  /* ── VIDEO SECTION ── */
+  .video-section {
+    background: var(--white); padding: 60px 5%;
+    position: relative; overflow: hidden;
+  }
+
+  .video-slider-wrap {
+    max-width: 1100px; margin: 0 auto;
+    position: relative;
+  }
+  .video-slider {
+    display: flex; gap: 0;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; cursor: grab;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-radius: 18px; overflow: hidden;
+  }
+  .video-slider::-webkit-scrollbar { display: none; }
+  .video-slider.grabbing { cursor: grabbing; }
+
+  .video-card {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    background: #1E0F08;
+    position: relative;
+  }
+
+  .video-drop {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(145deg, #2A1008, #0D0503);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 1rem;
+    position: relative; overflow: hidden;
+  }
+  .video-drop video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; display: block; z-index: 1;
+  }
+
+  /* Slide counter badge */
+
+  /* Play/pause overlay */
+  .video-overlay {
+    position: absolute; inset: 0; z-index: 4;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0); transition: background 0.25s;
+    opacity: 0; pointer-events: none;
+  }
+  .video-drop.has-video:hover .video-overlay { opacity: 1; background: rgba(0,0,0,0.28); pointer-events: all; cursor: pointer; }
+  .video-play-btn {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(196,98,45,0.88); display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .video-play-btn:hover { transform: scale(1.1); background: var(--terra); }
+  .video-play-btn svg { width: 24px; height: 24px; margin-left: 3px; }
+
+  /* Arrows */
+  .slider-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    background: rgba(255,252,248,0.92); border: 1.5px solid rgba(30,15,8,0.1);
+    box-shadow: 0 4px 20px rgba(30,15,8,0.18);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.25s; z-index: 10; color: var(--espresso);
+  }
+  .slider-arrow:hover { background: var(--espresso); color: var(--sand); border-color: var(--espresso); }
+  .slider-arrow.prev { left: -23px; }
+  .slider-arrow.next { right: -23px; }
+  .slider-arrow svg { width: 17px; height: 17px; }
+
+  /* Dots indicator */
+  .slider-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.4rem; }
+  .slider-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(30,15,8,0.15); border: none; cursor: pointer;
+    transition: all 0.3s; padding: 0;
+  }
+  .slider-dot.active { background: var(--terra); width: 24px; border-radius: 4px; }
+
+  /* ── FEATURED ── */
+  .featured { background: #EDE4D4; padding: 90px 5%; position: relative; overflow: hidden; }
+
+  /* Coffee crumbs decoration */
+  .crumbs {
+    position: absolute; pointer-events: none; z-index: 0;
+  }
+  .crumbs svg { display: block; }
+  .crumbs-tl { top: 0; left: 0; }
+  .crumbs-br { bottom: 0; right: 0; transform: rotate(180deg); }
+
+  .featured-header, .cards-grid, .cards-cta { position: relative; z-index: 1; }
+  .featured-header { max-width: 1100px; margin: 0 auto 3rem; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.8rem; max-width: 1100px; margin: 0 auto;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 4px 24px rgba(30,15,8,0.09);
+    transition: transform 0.35s, box-shadow 0.35s;
+  }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(30,15,8,0.13); }
+  .card-body { background: #ffffff; }
+
+  .card-img {
+    aspect-ratio: 9/16; position: relative; overflow: hidden;
+    background: linear-gradient(145deg,#2A0E04,#7A3518);
+  }
+  .card-img img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
+  }
+  .card-img-fallback {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 5.5rem;
+  }
+  .card-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 85%, rgba(196,98,45,0.18) 0%, transparent 70%);
+    pointer-events: none; z-index: 1;
+  }
+
+  .card-body { padding: 1.5rem 1.8rem 2rem; }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 600; color: var(--espresso); margin-bottom: 0.4rem;
+  }
+  .card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .card-price { font-size: 1.05rem; font-weight: 600; color: var(--espresso); }
+
+  .cards-cta { text-align: center; margin-top: 3rem; }
+  .btn-view-all {
+    display: inline-block; text-decoration: none;
+    border: 1.5px solid var(--espresso); color: var(--espresso);
+    padding: 0.85rem 2.8rem; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.04em; transition: all 0.25s;
+  }
+  .btn-view-all:hover { background: var(--espresso); color: var(--white); transform: translateY(-2px); }
+
+  /* ── ABOUT ── */
+  .about { background: var(--white); padding: 90px 5%; position: relative; overflow: hidden; }
+  .about-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .about-block {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; background: var(--ivory);
+    border-radius: 20px; overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .about-block.reverse { direction: rtl; }
+  .about-block.reverse > * { direction: ltr; }
+
+  .about-visual {
+    min-height: 340px; position: relative; overflow: hidden;
+  }
+  .about-visual img {
+    width: 100%; height: 100%; min-height: 340px; object-fit: cover; object-position: center; display: block;
+  }
+  .about-visual-fallback {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 5.5rem;
+  }
+  .about-visual::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(196,98,45,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .about-content { padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .about-tag {
+    display: inline-block; background: rgba(196,98,45,0.1); color: var(--terra);
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 0.9rem; border-radius: 3px; margin-bottom: 1.2rem; width: fit-content;
+  }
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 600; color: var(--espresso); margin-bottom: 1rem; line-height: 1.2;
+  }
+  .about-para { font-size: 0.88rem; color: var(--muted); line-height: 1.85; margin-bottom: 0.7rem; }
+  .about-divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--terra), var(--amber)); border-radius: 2px; margin-bottom: 1.5rem; }
+
+  .btn-explore {
+    display: inline-block; text-decoration: none;
+    background: var(--espresso); color: var(--sand);
+    padding: 0.75rem 1.8rem; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.87rem; font-weight: 500;
+    transition: all 0.25s; margin-top: 0.5rem; width: fit-content;
+  }
+  .btn-explore:hover { background: var(--terra); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--espresso); color: rgba(240,222,200,0.5);
+    padding: 60px 5% 28px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem; max-width: 1100px; margin: 0 auto 50px;
+  }
+  .footer-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 600; color: var(--sand);
+    letter-spacing: 0.04em; margin-bottom: 0.7rem;
+  }
+  .footer-logo-text span { color: var(--amber); font-style: italic; }
+  .footer-tagline { font-size: 0.82rem; line-height: 1.7; font-style: italic; color: rgba(240,222,200,0.4); }
+  .footer-col-title { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); font-weight: 600; margin-bottom: 1.2rem; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-links a { color: rgba(240,222,200,0.5); text-decoration: none; font-size: 0.84rem; transition: color 0.25s; }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-bottom {
+    max-width: 1100px; margin: 0 auto;
+    border-top: 1px solid rgba(240,222,200,0.07);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.76rem; color: rgba(240,222,200,0.28);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  .reveal { opacity:0; transform:translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* ── FLOATING BEANS ── */
+  .bean {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 38% 38%, #7A3A18, #2A0E04);
+    box-shadow: inset 2px 2px 5px rgba(232,147,90,0.15), 0 4px 14px rgba(0,0,0,0.5);
+    pointer-events: none;
+    animation: beanFloat linear infinite;
+  }
+  .bean::after {
+    content: '';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(30deg);
+    width: 2px; height: 68%;
+    background: rgba(0,0,0,0.35); border-radius: 2px;
+  }
+  @keyframes beanFloat {
+    0%   { transform: translateY(0)    rotate(0deg);   opacity: 0.9; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.7; }
+    100% { transform: translateY(-110vh) rotate(720deg); opacity: 0; }
+  }
+
+  @media(max-width:900px) {
+    .about-block, .about-block.reverse { grid-template-columns: 1fr; direction: ltr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .hero { flex-direction: column; text-align: center; }
+    .hero-btns, .hero-stats { justify-content: center; }
+    .hero-image { min-height: 280px; }
+    .section-eyebrow { justify-content: center; }
+  }
+  @media(max-width:600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+        <div class="nav-logo-img">
+      <img src="img/logomiyu.jpg" alt="Mi;Yu Logo" onerror="this.style.display='none';this.parentNode.innerHTML='&#9749;'">
+    </div>
+    <div class="nav-logo-info">
+      <div class="nav-logo-name">Mi<span>;</span>Yu Coffee &amp; Store</div>
+      <div class="nav-logo-sub">Coffee &amp; Food</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-btn active">Home</a>
+    <a href="menu.html" class="nav-btn">Menu</a>
+    <a href="locations.html" class="nav-btn">Locations</a>
+    <a href="gallery.html" class="nav-btn">Gallery</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-circle"></div>
+  <div class="hero-circle-ring"></div>
+
+  <!-- Floating beans -->
+  <div class="bean" style="left:8%;bottom:-40px;width:13px;height:20px;animation-duration:15s;animation-delay:0s;"></div>
+  <div class="bean" style="left:18%;bottom:-40px;width:10px;height:16px;animation-duration:19s;animation-delay:2s;"></div>
+  <div class="bean" style="left:30%;bottom:-40px;width:16px;height:25px;animation-duration:13s;animation-delay:5s;"></div>
+  <div class="bean" style="left:44%;bottom:-40px;width:11px;height:17px;animation-duration:17s;animation-delay:1s;"></div>
+  <div class="bean" style="left:55%;bottom:-40px;width:14px;height:22px;animation-duration:21s;animation-delay:7s;"></div>
+  <div class="bean" style="left:67%;bottom:-40px;width:9px;height:14px;animation-duration:14s;animation-delay:3s;"></div>
+  <div class="bean" style="left:78%;bottom:-40px;width:17px;height:27px;animation-duration:18s;animation-delay:9s;"></div>
+  <div class="bean" style="left:88%;bottom:-40px;width:12px;height:19px;animation-duration:16s;animation-delay:4s;"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Welcome to your daily ritual</div>
+    <h1 class="hero-title">
+      <em>Coffee</em>
+      <strong>in Its Purest Form.</strong>
+    </h1>
+    <p class="hero-slogan">Rich, bold, unforgettable. Our coffee is brewed to stand out, just like you.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openOrderPopup()">Order now</button>
+      <a href="menu.html" class="btn-outline">View menu</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">6</div>
+        <div class="stat-label">Signature Brews</div>
+      </div>
+      <div>
+        <div class="stat-num">4.2</div>
+        <div class="stat-label">Customer Rating</div>
+      </div>
+      <div>
+        <div class="stat-num">1yr</div>
+        <div class="stat-label">Crafting Love</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <div class="hero-cup">
+      <img src="img/miyuproduk.png" alt="Mi;Yu Coffee" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="hero-cup-fallback" style="display:none;">☕</div>
+    </div>
+    <div class="hero-tag">Our Brew Like Mi n Yu.</div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section">
+  <div class="video-slider-wrap">
+    <button class="slider-arrow prev" onclick="slideVideo(-1)" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+
+    <div class="video-slider" id="videoSlider">
+
+      <!-- Card 1 -->
+      <div class="video-card">
+        <div class="video-drop" id="drop0">
+          <video id="vid0" src="video1.mp4" loop muted playsinline
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          </video>
+          <div class="video-overlay" onclick="togglePlay(0)">
+            <div class="video-play-btn" id="playbtn0">
+              <svg viewBox="0 0 24 24" stroke="none"><polygon points="5 3 19 12 5 21 5 3" fill="#F0DEC8"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="video-card">
+        <div class="video-drop" id="drop1">
+          <video id="vid1" src="video2.mp4" loop muted playsinline
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          </video>
+          <div class="video-overlay" onclick="togglePlay(1)">
+            <div class="video-play-btn" id="playbtn1">
+              <svg viewBox="0 0 24 24" stroke="none"><polygon points="5 3 19 12 5 21 5 3" fill="#F0DEC8"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="video-card">
+        <div class="video-drop" id="drop2">
+          <video id="vid2" src="video3.mp4" loop muted playsinline
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          </video>
+          <div class="video-overlay" onclick="togglePlay(2)">
+            <div class="video-play-btn" id="playbtn2">
+              <svg viewBox="0 0 24 24" stroke="none"><polygon points="5 3 19 12 5 21 5 3" fill="#F0DEC8"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="slider-arrow next" onclick="slideVideo(1)" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <div class="slider-dots" id="sliderDots">
+    <button class="slider-dot active" onclick="goToSlide(0)"></button>
+    <button class="slider-dot" onclick="goToSlide(1)"></button>
+    <button class="slider-dot" onclick="goToSlide(2)"></button>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="featured">
+
+  <!-- Crumbs top-left -->
+  <div class="crumbs crumbs-tl">
+                    <svg width="260" height="220" viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="a1g" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#7A3A12"/>
+          <stop offset="45%" stop-color="#4A1E08"/>
+          <stop offset="100%" stop-color="#1E0803"/>
+        </radialGradient>
+        <radialGradient id="a2g" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#8B4618"/>
+          <stop offset="45%" stop-color="#5A2A0A"/>
+          <stop offset="100%" stop-color="#2A1005"/>
+        </radialGradient>
+        <radialGradient id="a3g" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#6A3010"/>
+          <stop offset="45%" stop-color="#3D1808"/>
+          <stop offset="100%" stop-color="#180603"/>
+        </radialGradient>
+        <radialGradient id="a4g" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#9A5020"/>
+          <stop offset="45%" stop-color="#6B3010"/>
+          <stop offset="100%" stop-color="#30120A"/>
+        </radialGradient>
+      </defs>
+
+      <g transform="rotate(-30, 45, 48)">
+        <path d="M45,28 C56,28 64,37 64,48 C64,59 56,68 45,68 C34,68 26,59 26,48 C26,37 34,28 45,28 Z" fill="url(#a1g)" opacity="0.7"/>
+        <path d="M45,30 C45,39 45,57 45,66" stroke="#0F0401" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+        <ellipse cx="40" cy="36" rx="4" ry="2.5" fill="white" opacity="0.07" transform="rotate(20,40,36)"/>
+      </g>
+      <g transform="rotate(25, 90, 25)">
+        <path d="M90,13 C99,13 106,19 106,25 C106,31 99,37 90,37 C81,37 74,31 74,25 C74,19 81,13 90,13 Z" fill="url(#a2g)" opacity="0.65"/>
+        <path d="M90,15 C90,21 90,29 90,35" stroke="#0F0401" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
+        <ellipse cx="86" cy="19" rx="3" ry="2" fill="white" opacity="0.07" transform="rotate(15,86,19)"/>
+      </g>
+      <g transform="rotate(-50, 22, 92)">
+        <path d="M22,80 C30,80 36,86 36,92 C36,98 30,104 22,104 C14,104 8,98 8,92 C8,86 14,80 22,80 Z" fill="url(#a4g)" opacity="0.6"/>
+        <path d="M22,82 C22,87 22,97 22,102" stroke="#0F0401" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+      </g>
+      <g transform="rotate(50, 120, 55)">
+        <path d="M120,40 C130,40 138,47 138,55 C138,63 130,70 120,70 C110,70 102,63 102,55 C102,47 110,40 120,40 Z" fill="url(#a3g)" opacity="0.65"/>
+        <path d="M120,42 C120,49 120,61 120,68" stroke="#0F0401" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <ellipse cx="115" cy="46" rx="3.5" ry="2" fill="white" opacity="0.07" transform="rotate(20,115,46)"/>
+      </g>
+      <g transform="rotate(-15, 62, 88)">
+        <path d="M62,80 C69,80 75,84 75,88 C75,92 69,96 62,96 C55,96 49,92 49,88 C49,84 55,80 62,80 Z" fill="url(#a2g)" opacity="0.6"/>
+        <path d="M62,81 C62,85 62,91 62,95" stroke="#0F0401" stroke-width="1.1" stroke-linecap="round" opacity="0.45"/>
+      </g>
+      <g transform="rotate(35, 155, 42)">
+        <path d="M155,34 C162,34 168,38 168,42 C168,46 162,50 155,50 C148,50 142,46 142,42 C142,38 148,34 155,34 Z" fill="url(#a1g)" opacity="0.55"/>
+        <path d="M155,35 C155,39 155,45 155,49" stroke="#0F0401" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+      </g>
+      <circle cx="28" cy="130" r="3.8" fill="#4A1E08" opacity="0.45"/>
+      <circle cx="55" cy="118" r="2.5" fill="#6B3010" opacity="0.4"/>
+      <circle cx="78" cy="100" r="3.2" fill="#3B1507" opacity="0.42"/>
+      <circle cx="105" cy="82" r="2" fill="#5A2A0A" opacity="0.38"/>
+      <circle cx="135" cy="68" r="4" fill="#4A1E08" opacity="0.38"/>
+      <circle cx="160" cy="78" r="2.2" fill="#6B3010" opacity="0.35"/>
+      <circle cx="185" cy="52" r="1.8" fill="#3B1507" opacity="0.3"/>
+      <circle cx="14" cy="62" r="2.2" fill="#5A2A0A" opacity="0.4"/>
+      <circle cx="42" cy="148" r="2.5" fill="#6B3010" opacity="0.35"/>
+      <circle cx="68" cy="140" r="1.6" fill="#4A1E08" opacity="0.38"/>
+      <circle cx="95" cy="128" r="3" fill="#3B1507" opacity="0.3"/>
+      <circle cx="175" cy="30" r="2" fill="#5A2A0A" opacity="0.3"/>
+      <circle cx="200" cy="65" r="1.5" fill="#4A1E08" opacity="0.28"/>
+    </svg>
+  </div>
+
+  <!-- Crumbs bottom-right -->
+  <div class="crumbs crumbs-br">
+    <svg width="220" height="200" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="38" cy="42" rx="13" ry="20" transform="rotate(-30 38 42)" fill="#3D1C08" opacity="0.75"/>
+      <ellipse cx="38" cy="42" rx="10" ry="17" transform="rotate(-30 38 42)" fill="#5C2E10" opacity="0.5"/>
+      <path d="M30 30 Q38 42 30 54" stroke="#1E0A03" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.6" transform="rotate(-30 38 42) translate(8 0)"/>
+      <ellipse cx="80" cy="22" rx="9" ry="14" transform="rotate(20 80 22)" fill="#6B3818" opacity="0.7"/>
+      <ellipse cx="80" cy="22" rx="6.5" ry="11" transform="rotate(20 80 22)" fill="#8B4A20" opacity="0.45"/>
+      <path d="M74 14 Q80 22 74 30" stroke="#3D1C08" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.55" transform="rotate(20 80 22) translate(6 0)"/>
+      <ellipse cx="18" cy="85" rx="7" ry="11" transform="rotate(-50 18 85)" fill="#8B4A20" opacity="0.65"/>
+      <ellipse cx="18" cy="85" rx="5" ry="8.5" transform="rotate(-50 18 85)" fill="#A85C28" opacity="0.4"/>
+      <path d="M13 79 Q18 85 13 91" stroke="#5C2E10" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5" transform="rotate(-50 18 85) translate(5 0)"/>
+      <ellipse cx="110" cy="50" rx="10" ry="16" transform="rotate(45 110 50)" fill="#2A1206" opacity="0.7"/>
+      <ellipse cx="110" cy="50" rx="7.5" ry="13" transform="rotate(45 110 50)" fill="#4A2210" opacity="0.45"/>
+      <path d="M103 40 Q110 50 103 60" stroke="#150803" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.55" transform="rotate(45 110 50) translate(7 0)"/>
+      <ellipse cx="55" cy="80" rx="5" ry="8" transform="rotate(-15 55 80)" fill="#7A4018" opacity="0.65"/>
+      <path d="M51 74 Q55 80 51 86" stroke="#4A2210" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5" transform="rotate(-15 55 80) translate(4 0)"/>
+      <circle cx="30" cy="120" r="3.5" fill="#5C2E10" opacity="0.5"/>
+      <circle cx="65" cy="105" r="2.5" fill="#3D1C08" opacity="0.45"/>
+      <circle cx="95" cy="78" r="4" fill="#7A4018" opacity="0.4"/>
+      <circle cx="140" cy="35" r="3" fill="#2A1206" opacity="0.45"/>
+      <circle cx="12" cy="55" r="2" fill="#6B3818" opacity="0.5"/>
+      <circle cx="150" cy="70" r="2.5" fill="#8B4A20" opacity="0.38"/>
+      <circle cx="170" cy="45" r="1.8" fill="#3D1C08" opacity="0.35"/>
+      <circle cx="48" cy="130" r="2" fill="#5C2E10" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <div class="featured-header">
+    <div class="section-eyebrow reveal">Our Specialties</div>
+    <h2 class="section-title reveal">Featured <em>Brews & Bites</em></h2>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card reveal">
+      <div class="card-img" style="background:linear-gradient(145deg,#2A0E04,#7A3518);">
+        <img src="img/menu/signature/komiyu.JPG" alt="Caramel Mi Latte" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-img-fallback" style="display:none;">🍮</div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-name">Ko Mi;Yu</h3>
+        <p class="card-desc">Kopi susu khas Mi;Yu dengan racikan spesial yang menjadi favorit pelanggan setia.</p>
+        <div class="card-footer"><span class="card-price">Rp 25.000</span></div>
+      </div>
+    </div>
+    <div class="card reveal" style="transition-delay:0.1s">
+      <div class="card-img" style="background:linear-gradient(145deg,#1A0800,#5C2A10);">
+        <img src="img/menu/milkseries/cokelatberry.jpg" alt="Yu Mocha Bloom" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-img-fallback" style="display:none;">🍫</div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-name">Choco Berry</h3>
+        <p class="card-desc">Perpaduan coklat dan berry segar yang unik — manis, asam, dan creamy.</p>
+        <div class="card-footer"><span class="card-price">Rp 25.000</span></div>
+      </div>
+    </div>
+    <div class="card reveal" style="transition-delay:0.2s">
+      <div class="card-img" style="background:linear-gradient(145deg,#3A1A05,#9A5A2A);">
+        <img src="img/menu/foods/miyurego.jpeg" alt="Together Frappe" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-img-fallback" style="display:none;">🧋</div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-name">Miyu Rego</h3>
+        <p class="card-desc">Camilan andalan Mi;Yu yang renyah dan mengenyangkan dengan bumbu spesial.</p>
+        <div class="card-footer"><span class="card-price">Rp 25.000</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+
+  <!-- Crumbs top-left -->
+  <div class="crumbs crumbs-tl">
+    <svg width="220" height="200" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="38" cy="42" rx="13" ry="20" transform="rotate(-30 38 42)" fill="#3D1C08" opacity="0.55"/>
+      <ellipse cx="38" cy="42" rx="10" ry="17" transform="rotate(-30 38 42)" fill="#5C2E10" opacity="0.35"/>
+      <path d="M30 30 Q38 42 30 54" stroke="#1E0A03" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.4" transform="rotate(-30 38 42) translate(8 0)"/>
+      <ellipse cx="80" cy="22" rx="9" ry="14" transform="rotate(20 80 22)" fill="#6B3818" opacity="0.5"/>
+      <ellipse cx="80" cy="22" rx="6.5" ry="11" transform="rotate(20 80 22)" fill="#8B4A20" opacity="0.3"/>
+      <path d="M74 14 Q80 22 74 30" stroke="#3D1C08" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.38" transform="rotate(20 80 22) translate(6 0)"/>
+      <ellipse cx="18" cy="85" rx="7" ry="11" transform="rotate(-50 18 85)" fill="#8B4A20" opacity="0.45"/>
+      <ellipse cx="18" cy="85" rx="5" ry="8.5" transform="rotate(-50 18 85)" fill="#A85C28" opacity="0.28"/>
+      <path d="M13 79 Q18 85 13 91" stroke="#5C2E10" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.35" transform="rotate(-50 18 85) translate(5 0)"/>
+      <ellipse cx="110" cy="50" rx="10" ry="16" transform="rotate(45 110 50)" fill="#2A1206" opacity="0.5"/>
+      <ellipse cx="110" cy="50" rx="7.5" ry="13" transform="rotate(45 110 50)" fill="#4A2210" opacity="0.3"/>
+      <path d="M103 40 Q110 50 103 60" stroke="#150803" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.38" transform="rotate(45 110 50) translate(7 0)"/>
+      <ellipse cx="55" cy="80" rx="5" ry="8" transform="rotate(-15 55 80)" fill="#7A4018" opacity="0.45"/>
+      <path d="M51 74 Q55 80 51 86" stroke="#4A2210" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.35" transform="rotate(-15 55 80) translate(4 0)"/>
+      <circle cx="30" cy="120" r="3.5" fill="#5C2E10" opacity="0.35"/>
+      <circle cx="65" cy="105" r="2.5" fill="#3D1C08" opacity="0.3"/>
+      <circle cx="95" cy="78" r="4" fill="#7A4018" opacity="0.28"/>
+      <circle cx="140" cy="35" r="3" fill="#2A1206" opacity="0.3"/>
+      <circle cx="12" cy="55" r="2" fill="#6B3818" opacity="0.35"/>
+      <circle cx="150" cy="70" r="2.5" fill="#8B4A20" opacity="0.25"/>
+      <circle cx="170" cy="45" r="1.8" fill="#3D1C08" opacity="0.25"/>
+      <circle cx="48" cy="130" r="2" fill="#5C2E10" opacity="0.28"/>
+    </svg>
+  </div>
+
+  <!-- Crumbs bottom-right -->
+  <div class="crumbs crumbs-br">
+    <svg width="220" height="200" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="38" cy="42" rx="13" ry="20" transform="rotate(-30 38 42)" fill="#3D1C08" opacity="0.55"/>
+      <ellipse cx="38" cy="42" rx="10" ry="17" transform="rotate(-30 38 42)" fill="#5C2E10" opacity="0.35"/>
+      <path d="M30 30 Q38 42 30 54" stroke="#1E0A03" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.4" transform="rotate(-30 38 42) translate(8 0)"/>
+      <ellipse cx="80" cy="22" rx="9" ry="14" transform="rotate(20 80 22)" fill="#6B3818" opacity="0.5"/>
+      <ellipse cx="80" cy="22" rx="6.5" ry="11" transform="rotate(20 80 22)" fill="#8B4A20" opacity="0.3"/>
+      <path d="M74 14 Q80 22 74 30" stroke="#3D1C08" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.38" transform="rotate(20 80 22) translate(6 0)"/>
+      <ellipse cx="18" cy="85" rx="7" ry="11" transform="rotate(-50 18 85)" fill="#8B4A20" opacity="0.45"/>
+      <ellipse cx="18" cy="85" rx="5" ry="8.5" transform="rotate(-50 18 85)" fill="#A85C28" opacity="0.28"/>
+      <path d="M13 79 Q18 85 13 91" stroke="#5C2E10" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.35" transform="rotate(-50 18 85) translate(5 0)"/>
+      <ellipse cx="110" cy="50" rx="10" ry="16" transform="rotate(45 110 50)" fill="#2A1206" opacity="0.5"/>
+      <ellipse cx="110" cy="50" rx="7.5" ry="13" transform="rotate(45 110 50)" fill="#4A2210" opacity="0.3"/>
+      <path d="M103 40 Q110 50 103 60" stroke="#150803" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.38" transform="rotate(45 110 50) translate(7 0)"/>
+      <ellipse cx="55" cy="80" rx="5" ry="8" transform="rotate(-15 55 80)" fill="#7A4018" opacity="0.45"/>
+      <path d="M51 74 Q55 80 51 86" stroke="#4A2210" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.35" transform="rotate(-15 55 80) translate(4 0)"/>
+      <circle cx="30" cy="120" r="3.5" fill="#5C2E10" opacity="0.35"/>
+      <circle cx="65" cy="105" r="2.5" fill="#3D1C08" opacity="0.3"/>
+      <circle cx="95" cy="78" r="4" fill="#7A4018" opacity="0.28"/>
+      <circle cx="140" cy="35" r="3" fill="#2A1206" opacity="0.3"/>
+      <circle cx="12" cy="55" r="2" fill="#6B3818" opacity="0.35"/>
+      <circle cx="150" cy="70" r="2.5" fill="#8B4A20" opacity="0.25"/>
+      <circle cx="170" cy="45" r="1.8" fill="#3D1C08" opacity="0.25"/>
+      <circle cx="48" cy="130" r="2" fill="#5C2E10" opacity="0.28"/>
+    </svg>
+  </div>
+
+  <div class="about-inner">
+    <div class="about-block reveal">
+      <div class="about-visual" style="background:linear-gradient(135deg,#1E0F08,#5A2A12);">
+        <img src="img/miyustory.jpg" alt="Our Story" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="about-visual-fallback" style="display:none;">☕</div>
+      </div>
+      <div class="about-content">
+        <span class="about-tag">Our Story</span>
+        <div class="about-divider"></div>
+        <h2 class="about-title">About Mi;Yu</h2>
+        <p class="about-para">Mi;Yu was born from a simple belief — that the best coffee is shared. Every cup we craft begins with carefully sourced beans, roasted in small batches to bring out their most honest flavors.</p>
+        <p class="about-para">The semicolon in our name is intentional. It's a pause — a breath between two people, two flavors, two moments. Our brew is where Mi meets Yu.</p>
+      </div>
+    </div>
+
+    <div class="about-block reverse reveal" style="transition-delay:0.15s">
+      <div class="about-visual" style="background:linear-gradient(135deg,#2A1008,#7A3A1A);">
+        <img src="img/miyuvalues.jpeg" alt="Our Values" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="about-visual-fallback" style="display:none;">🌿</div>
+      </div>
+      <div class="about-content">
+        <span class="about-tag">Our Values</span>
+        <div class="about-divider"></div>
+        <p class="about-para">We believe in slow mornings, sustainable sourcing, and spaces that feel like a second home. Whether you're here with someone or finding yourself — Mi;Yu holds space for both.</p>
+        <p class="about-para">From our latte art classes to late-night jazz nights, every corner of our store is crafted for connection.</p>
+        <a href="miyu-menu.html" class="btn-explore">Explore Our Menu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo-text">Mi<span>;</span>Yu Coffee & Store</div>
+      <p class="footer-tagline">"Our Brew Like Mi n Yu" — every cup a meeting point.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Quick Links</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="locations.html">Locations</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Support</p>
+      <ul class="footer-links">
+        <li><a href="locations.html">Contact Us</a></li>
+        <li><a href="#">24/7 Service</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Follow Us</p>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/mi.yu.coffee?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">Instagram</a></li>
+        <li><a href="https://www.tiktok.com/@miyu.coffee?_r=1&_t=ZS-94Xz04YOJl6">TikTok</a></li>
+        <li><a href="https://wa.me/6285147774497?text=Halo%20Mi%3BYu%20Coffee%2C%20saya%20ingin%20melakukan%20booking%20meja.%20Apakah%20ada%20tempat%20tersedia%3F%20%F0%9F%98%8A">WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Mi;Yu Coffee & Store. All rights reserved.</span>
+    <span>Our Brew Like Mi n Yu</span>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp Booking Button -->
+<a href="https://wa.me/6285147774497?text=Halo%20Mi%3BYu%20Coffee%2C%20saya%20ingin%20melakukan%20booking%20meja.%20Apakah%20ada%20tempat%20tersedia%3F%20%F0%9F%98%8A" target="_blank" rel="noopener" class="wa-float" title="Booking via WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 1.5C7.1 1.5 1.5 7.1 1.5 14c0 2.2.6 4.3 1.6 6.1L1.5 26.5l6.6-1.6c1.7.9 3.7 1.5 5.9 1.5 6.9 0 12.5-5.6 12.5-12.5S20.9 1.5 14 1.5z" fill="white"/>
+    <path d="M20.5 17.4c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6 0-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5-.1-.1-.3-.2-.6-.3z" fill="#25D366"/>
+  </svg>
+  <span class="wa-float-label">Booking</span>
+</a>
+
+<style>
+.wa-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  display: flex; align-items: center; gap: 8px;
+  background: #25D366; color: #fff;
+  padding: 12px 18px 12px 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-family: "DM Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: all 0.3s ease;
+}
+.wa-float:hover {
+  background: #1ebe5d;
+  box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+  transform: translateY(-3px);
+}
+.wa-float:active { transform: translateY(0); }
+.wa-float-label { letter-spacing: 0.03em; }
+@media(max-width:480px) {
+  .wa-float { padding: 12px; border-radius: 50%; }
+  .wa-float-label { display: none; }
+}
+</style>
+
+<!-- ORDER POPUP -->
+<div class="order-popup-overlay" id="orderPopup" onclick="closeOrderPopup(event)">
+  <div class="order-popup">
+    <button class="order-popup-close" onclick="closeOrderPopup()">✕</button>
+    <div class="order-popup-icon">
+      <svg width="80" height="52" viewBox="0 0 80 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          .moto-group { animation: motoRide 0.18s steps(1) infinite; }
+          @keyframes motoRide { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-1.5px)} }
+          .wheel { animation: wheelSpin 0.4s linear infinite; transform-box: fill-box; transform-origin: center; }
+          .exhaust { animation: puff 0.6s ease-out infinite; transform-origin: left center; }
+          @keyframes puff { 0%{opacity:0.7;transform:scaleX(0.2)} 100%{opacity:0;transform:scaleX(1) translateX(-8px)} }
+          .speed1 { animation: speed 0.5s linear infinite; }
+          .speed2 { animation: speed 0.5s 0.15s linear infinite; }
+          .speed3 { animation: speed 0.5s 0.3s linear infinite; }
+          @keyframes speed { 0%{opacity:0.6;transform:translateX(0)} 100%{opacity:0;transform:translateX(-14px)} }
+        </style>
+
+        <!-- Speed lines -->
+        <line class="speed1" x1="10" y1="28" x2="22" y2="28" stroke="#C4622D" stroke-width="1.8" stroke-linecap="round"/>
+        <line class="speed2" x1="6" y1="33" x2="18" y2="33" stroke="#C4622D" stroke-width="1.4" stroke-linecap="round"/>
+        <line class="speed3" x1="8" y1="23" x2="16" y2="23" stroke="#C4622D" stroke-width="1.2" stroke-linecap="round"/>
+
+        <g class="moto-group">
+          <!-- Exhaust puff -->
+          <ellipse class="exhaust" cx="24" cy="38" rx="4" ry="2" fill="#ccc" opacity="0.5"/>
+
+          <!-- Rear wheel -->
+          <circle class="wheel" cx="28" cy="40" r="8" stroke="#1E0F08" stroke-width="2.5" fill="none"/>
+          <circle cx="28" cy="40" r="3" fill="#1E0F08"/>
+          <line x1="28" y1="32" x2="28" y2="48" stroke="#1E0F08" stroke-width="1.5"/>
+          <line x1="20" y1="40" x2="36" y2="40" stroke="#1E0F08" stroke-width="1.5"/>
+
+          <!-- Front wheel -->
+          <circle class="wheel" cx="60" cy="40" r="8" stroke="#1E0F08" stroke-width="2.5" fill="none"/>
+          <circle cx="60" cy="40" r="3" fill="#1E0F08"/>
+          <line x1="60" y1="32" x2="60" y2="48" stroke="#1E0F08" stroke-width="1.5"/>
+          <line x1="52" y1="40" x2="68" y2="40" stroke="#1E0F08" stroke-width="1.5"/>
+
+          <!-- Body/frame -->
+          <path d="M28 40 L36 24 L50 22 L60 32 L60 40" stroke="#1E0F08" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Seat -->
+          <path d="M36 24 L48 22" stroke="#C4622D" stroke-width="3" stroke-linecap="round"/>
+          <!-- Food box -->
+          <rect x="30" y="18" width="14" height="12" rx="2" fill="#C4622D"/>
+          <rect x="31" y="19" width="12" height="10" rx="1.5" fill="#E8935A"/>
+          <line x1="37" y1="18" x2="37" y2="30" stroke="#C4622D" stroke-width="1"/>
+          <!-- Handlebar -->
+          <path d="M55 28 L62 26 L64 28" stroke="#1E0F08" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <!-- Rider body -->
+          <path d="M45 22 L48 14 L54 14 L56 22" fill="#3B1F10" stroke="none"/>
+          <!-- Rider head/helmet -->
+          <circle cx="51" cy="11" r="6" fill="#1E0F08"/>
+          <path d="M46 11 Q51 7 56 11" fill="#C4622D" stroke="none"/>
+          <!-- Visor -->
+          <path d="M47 12 Q51 10 55 12" stroke="#E8935A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+    <div class="order-popup-title">Order Mi;Yu</div>
+    <div class="order-popup-sub">Pilih platform pengiriman favoritmu</div>
+    <div class="order-popup-btns">
+
+      <!-- GrabFood -->
+      <a class="order-btn-grab" href="https://food.grab.com/id/id/restaurant/miyu-coffee-store-besusu-tengah-delivery/6-C7NVLVJTEVJKLE?" target="_blank" rel="noopener">
+        <svg width="90" height="24" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Grab wordmark -->
+          <path d="M8 16C8 11.58 11.58 8 16 8C18.5 8 20.74 9.08 22.3 10.82L18.8 13.6C18.04 12.72 16.9 12.16 15.62 12.16C13.04 12.16 11 14.22 11 16.84C11 19.46 13.04 21.52 15.62 21.52C17.54 21.52 19.18 20.4 19.88 18.78H15.4V15.3H24.12C24.22 15.82 24.28 16.38 24.28 16.96C24.28 21.86 20.64 25.84 15.62 25.84C10.96 25.84 7 22.34 7 17.12C7 16.74 7.02 16.36 7.06 16H8Z" fill="white"/>
+          <text x="28" y="22" font-family="Arial, sans-serif" font-size="16" font-weight="800" fill="white" letter-spacing="0.5">rabFood</text>
+        </svg>
+      </a>
+
+      <!-- GoFood -->
+      <a class="order-btn-go" href="https://gofood.co.id/en/palu/restaurant/miyu-coffee-and-store-kecamatan-palu-timur-28c5f760-e89b-4fd8-8927-0041fe5cee8d" target="_blank" rel="noopener">
+        <svg width="90" height="24" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Gojek/GoFood circular logo mark -->
+          <circle cx="16" cy="16" r="13" fill="white"/>
+          <circle cx="16" cy="16" r="7" fill="#E82529"/>
+          <circle cx="16" cy="16" r="3.5" fill="white"/>
+          <text x="34" y="22" font-family="Arial, sans-serif" font-size="16" font-weight="800" fill="white" letter-spacing="0.5">GoFood</text>
+        </svg>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // ── ORDER POPUP ──
+  function openOrderPopup() {
+    document.getElementById('orderPopup').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeOrderPopup(e) {
+    if (e && e.target !== document.getElementById('orderPopup')) return;
+    document.getElementById('orderPopup').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { document.getElementById('orderPopup').classList.remove('open'); document.body.style.overflow = ''; }
+  });
+
+  // ── VIDEO PLAYER ──
+  // Auto play video 1 on load
+  window.addEventListener('load', () => {
+    const v = document.getElementById('vid0');
+    if (v) v.play().catch(()=>{});
+  });
+
+  function togglePlay(idx) {
+    const vid = document.getElementById('vid' + idx);
+    const btn = document.getElementById('playbtn' + idx);
+    if (!vid) return;
+    if (vid.paused) {
+      vid.play();
+      btn.innerHTML = '<svg viewBox="0 0 24 24" stroke="none"><rect x="5" y="3" width="4" height="18" rx="1" fill="#F0DEC8"/><rect x="15" y="3" width="4" height="18" rx="1" fill="#F0DEC8"/></svg>';
+    } else {
+      vid.pause();
+      btn.innerHTML = '<svg viewBox="0 0 24 24" stroke="none"><polygon points="5 3 19 12 5 21 5 3" fill="#F0DEC8"/></svg>';
+    }
+  }
+
+  // ── SLIDER ──
+  const slider = document.getElementById('videoSlider');
+  const dots = document.querySelectorAll('.slider-dot');
+  let currentSlide = 0;
+
+  function updateDots(idx) {
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    currentSlide = idx;
+    // pause all, play current
+    [0,1,2].forEach(i => {
+      const v = document.getElementById('vid' + i);
+      if (!v) return;
+      if (i === idx) { v.play().catch(()=>{}); }
+      else { v.pause(); }
+    });
+  }
+
+  function goToSlide(idx) {
+    slider.scrollTo({ left: idx * slider.offsetWidth, behavior: 'smooth' });
+    updateDots(idx);
+  }
+
+  function slideVideo(dir) {
+    const total = 3;
+    const next = Math.max(0, Math.min(total - 1, currentSlide + dir));
+    goToSlide(next);
+  }
+
+  slider.addEventListener('scroll', () => {
+    const idx = Math.round(slider.scrollLeft / slider.offsetWidth);
+    if (idx !== currentSlide) updateDots(idx);
+  });
+
+  // Drag to scroll
+  let isDown = false, startX, scrollLeft;
+  slider.addEventListener('mousedown', e => {
+    isDown = true; slider.classList.add('grabbing');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+  slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('grabbing'); });
+  slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('grabbing'); });
+  slider.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    slider.scrollLeft = scrollLeft - (e.pageX - slider.offsetLeft - startX) * 1.2;
+  });
+</script>
+
+<!-- ── SPECIAL OFFER POPUP (3 slides) ── -->
+<!-- Special Offer Popup — 3 slides -->
+<!-- Special Offer Popup -->
+<div id="offerPopup" class="offer-overlay hidden">
+  <div class="offer-modal">
+    <button class="offer-close" onclick="closeOfferPopup()" title="Tutup">&times;</button>
+
+    <!-- Slide 1: 9:16 + tombol reservasi -->
+    <div class="offer-img-wrap ratio-916">
+      <img src="bukber.jpg" alt="Special Offer" class="offer-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="offer-img-fallback"><div class="offer-fallback-inner"><div class="offer-fallback-badge">✦ Special Offer</div><div class="offer-fallback-title">Promo<br>Spesial</div><div class="offer-fallback-sub">Mi;Yu Coffee &amp; Store</div></div></div>
+      <div class="offer-img-overlay"></div>
+      <div class="offer-img-tag">🎉 Special Offer</div>
+    </div>
+    <div class="offer-body">
+      <a href="https://wa.me/6285147774497?text=Halo%20Mi%3BYu%20Coffee%2C%20saya%20ingin%20reservasi%20dan%20info%20promo%20spesial.%20Bisa%20dibantu%3F%20%F0%9F%98%8A"
+         target="_blank" rel="noopener" class="offer-btn-wa" onclick="closeOfferPopup()">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+          <path d="M14 1.5C7.1 1.5 1.5 7.1 1.5 14c0 2.2.6 4.3 1.6 6.1L1.5 26.5l6.6-1.6c1.7.9 3.7 1.5 5.9 1.5 6.9 0 12.5-5.6 12.5-12.5S20.9 1.5 14 1.5z" fill="white"/>
+          <path d="M20.5 17.4c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6 0-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.2-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3 4.8 4.2.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5-.1-.1-.3-.2-.6-.3z" fill="#25D366"/>
+        </svg>
+        Reservasi via WhatsApp
+      </a>
+      <button class="offer-btn-skip" onclick="closeOfferPopup()">Nanti Saja</button>
+    </div>
+
+    <div class="offer-separator"></div>
+
+    <!-- Slide 2: 1:1 + caption -->
+    <div class="offer-img-wrap ratio-11">
+      <img src="slide2.jpg" alt="Menu Baru" class="offer-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="offer-img-fallback"><div class="offer-fallback-inner"><div class="offer-fallback-badge">☕ Menu Baru</div><div class="offer-fallback-title" style="font-size:2rem">Menu<br>Terbaru</div></div></div>
+      <div class="offer-img-overlay"></div>
+    </div>
+    <div class="offer-caption">
+      <div class="offer-caption-title">AVAILABLE IN GOFOOD & GRABFOOD‼️</div>
+      <div class="offer-caption-desc">Kini lebih mudah pesan Kopi favoritmu. MiYu Coffee tersedia di Grab & Gofood. Ngopi di Rumah? Pesan sekarang, hemat waktu hemat tenaga..</div>
+    </div>
+
+    <div class="offer-separator"></div>
+
+    <!-- Slide 3: 9:16 + caption -->
+    <div class="offer-img-wrap ratio-916">
+      <img src="img/ultah.jpeg" alt="Bundle Hemat" class="offer-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="offer-img-fallback"><div class="offer-fallback-inner"><div class="offer-fallback-badge">🍽️ Bundle Hemat</div><div class="offer-fallback-title">Hemat<br>Bareng</div><div class="offer-fallback-sub">Mi;Yu Coffee &amp; Store</div></div></div>
+      <div class="offer-img-overlay"></div>
+    </div>
+    <div class="offer-caption">
+      <div class="offer-caption-title">BIRTHDAY TREAT</div>
+      <div class="offer-caption-desc">Dapatkan produk Minuman & Air Mineral dari Mi;Yu Coffee & Store Dihari Ulang Tahunmu.</div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.offer-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(13,5,3,0.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  animation: offerFadeIn 0.4s ease both;
+}
+.offer-overlay.hidden { display: none; }
+@keyframes offerFadeIn { from{opacity:0} to{opacity:1} }
+
+.offer-modal {
+  position: relative; width: 100%; max-width: 300px;
+  max-height: 88vh; overflow-y: auto;
+  border-radius: 18px; background: var(--white);
+  box-shadow: 0 28px 80px rgba(0,0,0,0.55);
+  animation: offerSlideUp 0.45s cubic-bezier(.22,.68,0,1.15) both;
+  scrollbar-width: none;
+}
+.offer-modal::-webkit-scrollbar { display: none; }
+@keyframes offerSlideUp { from{opacity:0;transform:scale(0.9) translateY(30px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+.offer-close {
+  position: sticky; top: 8px; left: calc(100% - 44px);
+  display: block; margin: 0 8px 0 auto;
+  z-index: 20; background: rgba(13,5,3,0.7); backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.2); cursor: pointer;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-size: 1.1rem; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; margin-bottom: -40px;
+}
+.offer-close:hover { background: var(--terra); }
+
+.offer-img-wrap {
+  position: relative; width: 100%; overflow: hidden;
+  background: linear-gradient(160deg, #3B1F10 0%, #1E0F08 60%, #0D0503 100%);
+}
+.ratio-916 { aspect-ratio: 9/16; }
+.ratio-11  { aspect-ratio: 4/5; }
+.offer-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.offer-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(13,5,3,0.25) 100%);
+  pointer-events: none;
+}
+.offer-img-tag {
+  position: absolute; top: 10px; left: 10px;
+  background: var(--terra); color: #fff;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.07em;
+  padding: 0.22rem 0.65rem; border-radius: 4px;
+}
+.offer-img-fallback {
+  display: none; position: absolute; inset: 0;
+  align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at 40% 40%, #4A2010 0%, #1E0F08 55%, #0D0503 100%);
+}
+.offer-fallback-inner { text-align: center; padding: 1rem; }
+.offer-fallback-badge { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.6rem; }
+.offer-fallback-title { font-family: "Playfair Display", serif; font-size: 2.2rem; font-weight: 900; color: var(--sand); line-height: 1.1; }
+.offer-fallback-sub { font-size: 0.68rem; color: rgba(240,222,200,0.45); margin-top: 0.5rem; }
+
+.offer-body { padding: 0.8rem 1rem 0.9rem; }
+.offer-btn-wa {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: #25D366; color: #fff; text-decoration: none;
+  padding: 0.72rem 1rem; border-radius: 8px; margin-bottom: 0.5rem;
+  font-family: "DM Sans", sans-serif; font-size: 0.86rem; font-weight: 700;
+  box-shadow: 0 3px 12px rgba(37,211,102,0.35); transition: all 0.25s;
+}
+.offer-btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); }
+.offer-btn-skip {
+  background: none; border: 1.5px solid rgba(30,15,8,0.15);
+  color: var(--muted); padding: 0.58rem; width: 100%;
+  border-radius: 8px; font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
+}
+.offer-btn-skip:hover { border-color: var(--terra); color: var(--terra); }
+
+.offer-separator { height: 6px; background: var(--ivory); }
+
+.offer-caption { padding: 0.85rem 1rem 0.9rem; }
+.offer-caption-title { font-family: "Playfair Display", serif; font-size: 0.92rem; font-weight: 700; color: var(--espresso); margin-bottom: 0.3rem; }
+.offer-caption-desc { font-size: 0.74rem; color: var(--muted); line-height: 1.55; }
+
+@media(max-width:360px) { .offer-modal { max-width: 95vw; } }
+</style>
+
+<script>
+  window.addEventListener('load', function() {
+    var noShow = localStorage.getItem('miyuOfferNoShow');
+    if (noShow !== new Date().toDateString()) {
+      var p = document.getElementById('offerPopup');
+      p.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  function closeOfferPopup() {
+    var popup = document.getElementById('offerPopup');
+    popup.style.opacity = '0';
+    popup.style.transition = 'opacity 0.2s';
+    document.body.style.overflow = '';
+    setTimeout(function(){ popup.classList.add('hidden'); popup.style.opacity = ''; popup.style.transition = ''; }, 200);
+  }
+
+  document.getElementById('offerPopup').addEventListener('click', function(e){
+    if (e.target === this) closeOfferPopup();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeOfferPopup();
+  });
+</script>
+</body>
+</html>
