@@ -525,8 +525,14 @@
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .hero { flex-direction: column; text-align: center; }
     .hero-btns, .hero-stats { justify-content: center; }
-    .hero-image { min-height: 280px; }
+    .hero-image { min-height: 280px; flex-direction: column; align-items: center; }
     .section-eyebrow { justify-content: center; }
+    .hero-tag {
+      position: static;
+      display: inline-block;
+      margin-top: 1rem;
+      text-align: center;
+    }
   }
   @media(max-width:600px) {
     .footer-grid { grid-template-columns: 1fr; }
