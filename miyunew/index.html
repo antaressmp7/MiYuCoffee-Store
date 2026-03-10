@@ -560,6 +560,94 @@
     .nav-logo-img { width: 28px; height: 28px; }
   }
 
+
+  /* ── RATING SECTION ── */
+  .rating-section {
+    background: linear-gradient(135deg, #1E0F08 0%, #2A1508 50%, #1a0c05 100%);
+    padding: 80px 5%;
+    position: relative; overflow: hidden;
+  }
+  /* thankyou animated emoji */
+  .thankyou-anim {
+    display: inline-block;
+    animation: partyPop 0.5s cubic-bezier(.22,.68,0,1.4) both, partyShake 0.6s 0.5s ease-in-out 3;
+    transform-origin: center bottom;
+  }
+  @keyframes partyPop {
+    0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+    70%  { transform: scale(1.3) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  @keyframes partyShake {
+    0%,100% { transform: rotate(0deg) scale(1); }
+    25%     { transform: rotate(-18deg) scale(1.15); }
+    75%     { transform: rotate(18deg) scale(1.15); }
+  }
+
+  /* animated star eyebrow icon */
+  .eyebrow-icon-anim {
+    display: inline-flex; align-items: center; justify-content: center;
+    animation: starPulse 1.6s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes starPulse {
+    0%,100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0px #E8935A); }
+    30%      { transform: scale(1.35) rotate(-15deg); filter: drop-shadow(0 0 5px #E8935A); }
+    60%      { transform: scale(1.1) rotate(10deg); filter: drop-shadow(0 0 8px #E8935A); }
+  }
+
+    .rating-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(196,98,45,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .rating-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .rating-heading {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem; font-weight: 700; color: var(--sand);
+    line-height: 1.25; margin-bottom: 0.9rem;
+  }
+  .rating-desc { font-size: 0.88rem; color: rgba(240,222,200,0.5); line-height: 1.7; margin-bottom: 1.8rem; }
+  .rating-avg-box { display: flex; align-items: center; gap: 1.2rem; }
+  .rating-avg-num {
+    font-family: "Playfair Display", serif;
+    font-size: 3.5rem; font-weight: 700; color: var(--amber); line-height: 1;
+  }
+  .rating-avg-stars { font-size: 1.3rem; color: #F5A623; letter-spacing: 2px; margin-bottom: 0.3rem; }
+  .rating-avg-label { font-size: 0.75rem; color: rgba(240,222,200,0.4); }
+  .rating-card {
+    background: rgba(255,252,248,0.05); border: 1px solid rgba(196,98,45,0.2);
+    border-radius: 20px; padding: 2.2rem 2rem;
+    text-align: center; backdrop-filter: blur(10px);
+  }
+  .rating-card-title { font-family: "Playfair Display", serif; font-size: 1rem; color: rgba(240,222,200,0.6); margin-bottom: 1.4rem; }
+  .rating-stars-wrap { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 0.8rem; }
+  .rstar {
+    font-size: 2.8rem; color: rgba(240,222,200,0.2); cursor: pointer;
+    transition: color 0.15s, transform 0.15s; user-select: none;
+  }
+  .rstar.hover, .rstar.selected { color: #F5A623; transform: scale(1.2); }
+  .rating-label { font-size: 0.82rem; color: var(--amber); font-weight: 600; min-height: 1.3rem; margin-bottom: 1.4rem; }
+  .rating-submit-btn {
+    width: 100%; padding: 0.85rem;
+    background: var(--terra); color: #fff;
+    border: none; border-radius: 10px;
+    font-family: "DM Sans", sans-serif; font-size: 0.92rem; font-weight: 700;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .rating-submit-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .rating-submit-btn:not(:disabled):hover { background: var(--amber); transform: translateY(-2px); }
+  @media(max-width:700px) {
+    .rating-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .rating-heading { font-size: 1.5rem; }
+    .rating-avg-num { font-size: 2.8rem; }
+    .rstar { font-size: 2.2rem; }
+    .rating-section { padding: 60px 5%; }
+  }
 </style>
 </head>
 <body>
@@ -613,9 +701,9 @@
         <div class="stat-num">6</div>
         <div class="stat-label">Signature Brews</div>
       </div>
-      <div>
-        <div class="stat-num">4.2</div>
-        <div class="stat-label">Customer Rating</div>
+      <div id="heroRatingWrap">
+        <div class="stat-num" id="heroRatingNum">4.2</div>
+        <div class="stat-label">Customer Rating ⭐</div>
       </div>
       <div>
         <div class="stat-num">1yr</div>
@@ -931,6 +1019,36 @@
 </section>
 
 <!-- FOOTER -->
+<section class="rating-section">
+  <div class="rating-inner">
+    <div class="rating-left">
+      <div class="section-eyebrow" style="justify-content:flex-start;">
+        <span class="eyebrow-icon-anim">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="star-path" d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#E8935A" stroke="#E8935A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span> Beri Penilaian
+      </div>
+      <h2 class="rating-heading">Bagaimana Pengalamanmu<br>di Mi;Yu?</h2>
+      <p class="rating-desc">Ceritakan pengalamanmu — setiap bintang berarti bagi kami untuk terus berkembang.</p>
+    </div>
+    <div class="rating-right">
+      <div class="rating-card" id="ratingCard">
+        <div class="rating-card-title">Tap bintang untuk menilai</div>
+        <div class="rating-stars-wrap" id="ratingStars">
+          <span class="rstar" data-v="1" onmouseenter="hoverStar(1)" onmouseleave="resetStarHover()" onclick="selectStar(1)">★</span>
+          <span class="rstar" data-v="2" onmouseenter="hoverStar(2)" onmouseleave="resetStarHover()" onclick="selectStar(2)">★</span>
+          <span class="rstar" data-v="3" onmouseenter="hoverStar(3)" onmouseleave="resetStarHover()" onclick="selectStar(3)">★</span>
+          <span class="rstar" data-v="4" onmouseenter="hoverStar(4)" onmouseleave="resetStarHover()" onclick="selectStar(4)">★</span>
+          <span class="rstar" data-v="5" onmouseenter="hoverStar(5)" onmouseleave="resetStarHover()" onclick="selectStar(5)">★</span>
+        </div>
+        <div class="rating-label" id="ratingLabel">&nbsp;</div>
+        <button class="rating-submit-btn" id="ratingSubmit" onclick="submitRating()" disabled>Kirim Penilaian</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-grid">
     <div>
@@ -1350,5 +1468,79 @@
     if (e.key === 'Escape') closeOfferPopup();
   });
 </script>
+
 </body>
+
+<script>
+(function() {
+  var STORAGE_KEY = "miyuRatings";
+  var selectedStar = 0;
+  var labels = ["","Kurang Memuaskan","Cukup Baik","Bagus!","Sangat Bagus!","Luar Biasa!"];
+
+  function getRatings() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e) { return []; }
+  }
+
+  function calcAvg(arr) {
+    if (!arr.length) return null;
+    return Math.round(arr.reduce(function(a,b){return a+b;},0)/arr.length*10)/10;
+  }
+
+  function starsHTML(avg) {
+    var s = ""; for(var i=1;i<=5;i++) s += avg>=i?"★":(avg>=i-0.5?"½":"☆"); return s;
+  }
+
+  function updateDisplay() {
+    var arr = getRatings();
+    var avg = calcAvg(arr);
+    var numEl = document.getElementById("heroRatingNum");
+    var starsEl = document.getElementById("heroRatingStars");
+    var countEl = document.getElementById("heroRatingCount");
+    if (numEl) numEl.textContent = avg !== null ? avg.toFixed(1) : "4.2";
+    if (starsEl) starsEl.textContent = avg !== null ? starsHTML(avg) : "★★★★☆";
+    if (countEl) countEl.textContent = arr.length > 0 ? arr.length : "—";
+  }
+
+  window.hoverStar = function(v) {
+    document.querySelectorAll(".rstar").forEach(function(s) {
+      var sv = parseInt(s.dataset.v);
+      s.classList.toggle("hover", sv <= v);
+      s.classList.remove("selected");
+    });
+  };
+
+  window.resetStarHover = function() {
+    document.querySelectorAll(".rstar").forEach(function(s) {
+      s.classList.remove("hover");
+      s.classList.toggle("selected", parseInt(s.dataset.v) <= selectedStar);
+    });
+  };
+
+  window.selectStar = function(v) {
+    selectedStar = v;
+    resetStarHover();
+    document.getElementById("ratingLabel").textContent = labels[v];
+    document.getElementById("ratingSubmit").disabled = false;
+  };
+
+  window.submitRating = function() {
+    if (!selectedStar) return;
+    var arr = getRatings();
+    arr.push(selectedStar);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    updateDisplay();
+
+    var card = document.getElementById("ratingCard");
+    card.innerHTML = "<div style=\"text-align:center;padding:1rem 0;\">"
+      + "<div style=\"font-size:3rem;margin-bottom:0.8rem;\"><span class=\"thankyou-anim\">🎉</span></div>"
+      + "<div style=\"font-family:Playfair Display,serif;font-size:1.1rem;font-weight:700;color:var(--sand);margin-bottom:0.4rem;\">Terima kasih!</div>"
+      + "<div style=\"font-size:0.8rem;color:rgba(240,222,200,0.5);\">Rating kamu sudah kami catat ✨</div>"
+      + "</div>";
+  };
+
+  window.addEventListener("DOMContentLoaded", updateDisplay);
+})();
+</script>
+
 </html>
